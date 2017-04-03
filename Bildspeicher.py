@@ -2,8 +2,11 @@ import Taschenrechner_Fenster
 
 class Bildspeicher():
     def __init__(self):
-        self.bilder = [0,0,0,0,0,0]
-        self.bilder_mit_feldern = [0,0,0,0,0,0]
+        self.bilder = [0, 0, 0, 0, 0, 0]
+        self.bilder_mit_feldern = [0, 0, 0, 0, 0, 0]
+        self.BGR = 0
+        self.HSV = 1
+        self.GRAY = 2
 
     def add_bild(self, bild, index):
         self.bilder[index] = bild
