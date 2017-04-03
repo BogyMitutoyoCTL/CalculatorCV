@@ -3,8 +3,9 @@ import Datenbank
 
 class Window:
 
-    def __init__(self, datenbank):
+    def __init__(self, datenbank, bildbearbeitungstools):
         self.datenbank = datenbank
+        self.bildbearbeitung = bildbearbeitungstools
 
     def create_window(self, fenster_name):
         cv2.namedWindow(fenster_name)
@@ -27,26 +28,32 @@ class Window:
     def lower_h_changed(self, wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_lower_h(wert)
+        self.bildbearbeitung.glove_filter()
 
     def upper_h_changed(self,wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_upper_h(wert)
+        self.bildbearbeitung.glove_filter()
 
     def lower_s_changed(self,wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_lower_s(wert)
+        self.bildbearbeitung.glove_filter()
 
     def upper_s_changed(self,wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_upper_s(wert)
+        self.bildbearbeitung.glove_filter()
 
     def lower_v_changed(self,wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_lower_v(wert)
+        self.bildbearbeitung.glove_filter()
 
     def upper_v_changed(self,wert):
         """Funktion die geändert werden soll"""
         self.datenbank.change_upper_v(wert)
+        self.bildbearbeitung.glove_filter()
 
     def size_changed(self,wert):
         """Funktion die geändert werden soll"""
