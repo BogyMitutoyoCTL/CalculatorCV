@@ -1,4 +1,3 @@
-import Bildspeicher
 import cv2
 
 class Bildbearbeitungstools():
