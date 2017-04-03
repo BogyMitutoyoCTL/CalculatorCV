@@ -17,3 +17,8 @@ class Bildbearbeitungstools():
         #self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
         #test = cv2.cvtColor(hsv_bild,cv2.COLOR_BGR2HSV)
         self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
+
+    def handschuh_einfärben(self):
+        umgedreht = cv2.bitwise_not(self.bildspeicher.get_bild(self.bildspeicher.GRAY))
+        hsv2_bild = cv2.bitwise_and(self.bildspeicher.HSV, 1, self.bildspeicher.HSV, umgedreht)
+        self.bildspeicher.add_bild(hsv2_bild, self. bildspeicher.HSV2)
