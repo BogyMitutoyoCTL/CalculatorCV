@@ -6,19 +6,16 @@ import cv2
 
 class Picture:
 
-    def __init__(self):
+    def __init__(self, bildspeicher):
         self.image = None
+        self.bildspeicher = bildspeicher
+        self.camera = PiCamera()
+        self.rawCapture = PiRGBArray(self.camera)
 
-    def show_picture(self, fenster_name, bild):
-        camera.capture(bild, format="bgr")
-        self.image = bild.array
-        cv2.imshow(fenster_name, self.image)
+        time.sleep(0.1)
 
-camera = PiCamera()
-rawCapture = PiRGBArray(camera)
+    def save_picture(self):
+        self.camera.capture(self.rawCapture, format="bgr")
+        self.image = self.rawCapture.array
+        self.bildspeicher.add_bild(self.image, 0)
 
-time.sleep(0.1)
-
-Bild = Picture()
-Bild.show_picture("Bild", rawCapture)
-cv2.waitKey(0)

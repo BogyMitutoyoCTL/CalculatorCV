@@ -3,8 +3,8 @@ import Datenbank
 
 class Window:
 
-    def __init__(self):
-        self.datenbank = Datenbank.Datenbank()
+    def __init__(self, datenbank):
+        self.datenbank = datenbank
 
     def create_window(self, fenster_name):
         cv2.namedWindow(fenster_name)
