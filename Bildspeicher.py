@@ -1,5 +1,3 @@
-import Taschenrechner_Fenster
-
 class Bildspeicher():
     def __init__(self):
         self.bilder = [0, 0, 0, 0, 0, 0]

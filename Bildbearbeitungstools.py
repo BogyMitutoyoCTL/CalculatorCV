@@ -16,4 +16,4 @@ class Bildbearbeitungstools():
         hsv_bild = self.bildspeicher.get_bild(self.bildspeicher.HSV)
         #self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
         #test = cv2.cvtColor(hsv_bild,cv2.COLOR_BGR2HSV)
-        self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
+        self.bildspeicher.add_bild(cv2.inRange(hsv_bild, (0,0,0), (1,2,2)), self.bildspeicher.GRAY)
