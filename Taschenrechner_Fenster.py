@@ -1,6 +1,10 @@
 import cv2
+import Datenbank
 
 class Window:
+
+    def __init__(self):
+        self.datenbank = Datenbank.Datenbank()
 
     def create_window(self, fenster_name):
         cv2.namedWindow(fenster_name)
@@ -22,24 +26,31 @@ class Window:
 
     def lower_h_changed(self, wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_lower_h(wert)
 
     def upper_h_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_upper_h(wert)
 
     def lower_s_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_lower_s(wert)
 
     def upper_s_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_upper_s(wert)
 
     def lower_v_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_lower_v(wert)
 
     def upper_v_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_upper_v(wert)
 
     def size_changed(self,wert):
         """Funktion die geändert werden soll"""
+        self.datenbank.change_size(wert)
 
 
 Fenster = Window()
