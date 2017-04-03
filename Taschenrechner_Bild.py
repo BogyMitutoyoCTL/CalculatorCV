@@ -3,19 +3,22 @@ from picamera import PiCamera
 import time
 import cv2
 
+
+class Picture:
+
+    def __init__(self):
+        self.image = None
+
+    def show_picture(self, fenster_name, bild):
+        camera.capture(bild, format="bgr")
+        self.image = bild.array
+        cv2.imshow(fenster_name, self.image)
+
 camera = PiCamera()
 rawCapture = PiRGBArray(camera)
-camera.framerate = 4
 
 time.sleep(0.1)
 
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-    image = frame.array
-
-    cv2.imshow("Frame", image)
-    key = cv2.waitKey(1) & 0xFF
-
-    rawCapture.truncate(0)
-
-    if key == ord("q"):
-		    break
+Bild = Picture()
+Bild.show_picture("Bild", rawCapture)
+cv2.waitKey(0)
