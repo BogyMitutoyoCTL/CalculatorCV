@@ -5,6 +5,9 @@ class Window:
     def create_window(self, fenster_name):
         cv2.namedWindow(fenster_name)
 
+    def show_picture(self,fenster_name, picture):
+        cv2.imshow(fenster_name, picture)
+
     def wait_key(self):
         cv2.waitKey(0) & 0xFF
 
