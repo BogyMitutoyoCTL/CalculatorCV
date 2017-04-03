@@ -14,8 +14,6 @@ class Bildbearbeitungstools():
         lowerhsv = (self.datenbank.lower_h, self.datenbank.lower_s, self.datenbank.lower_v)
         upperhsv = (self.datenbank.upper_h, self.datenbank.upper_s, self.datenbank.upper_v)
         hsv_bild = self.bildspeicher.get_bild(self.bildspeicher.HSV)
-        #self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
-        #test = cv2.cvtColor(hsv_bild,cv2.COLOR_BGR2HSV)
         self.bildspeicher.add_bild(cv2.inRange(hsv_bild, lowerhsv, upperhsv), self.bildspeicher.GRAY)
 
     def handschuh_einfärben(self):
