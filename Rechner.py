@@ -78,4 +78,6 @@ assert 0.6 == rechner.rechne(3, 5, None, 3)
 assert 243 == rechner.rechne(3, 5, None, 4)
 assert 0 == rechner.rechne(3, 5, None, 5)
 assert 3 == rechner.rechne(3, 5, None, 6)
-
+print(__name__)
+if __name__ == "__main__":
+    print("Bitte Main ausführen.")
