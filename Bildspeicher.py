@@ -1,3 +1,5 @@
+import Taschenrechner_Fenster
+
 class Bildspeicher():
     def __init__(self):
         self.bilder = [0,0,0,0,0,0]
@@ -14,5 +16,14 @@ class Bildspeicher():
 
     def get_bild_mit_fenster(self, index):
         return self.bilder_mit_feldern[index]
+
+    def bild_anzeigen(self, felder_ja_nein, fenstername, index):
+        if felder_ja_nein is True:
+            bild = self.get_bild_mit_fenster(index)
+        else:
+            bild = self.get_bild(index)
+
+        window = Taschenrechner_Fenster.Window()
+        window.show_picture(fenstername, bild)
 
 
