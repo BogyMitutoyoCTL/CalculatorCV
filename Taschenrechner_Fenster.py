@@ -53,9 +53,9 @@ class Window:
         self.datenbank.change_size(wert)
 
 
-Fenster = Window()
-Fenster.create_window("Taschenrechner")
-Fenster.create_window("Präsentation")
-Fenster.wait_key()
-Fenster.create_Trackbar("Taschenrechner")
-Fenster.wait_key()
+# Fenster = Window()
+# Fenster.create_window("Taschenrechner")
+# Fenster.create_window("Präsentation")
+# Fenster.wait_key()
+# Fenster.create_Trackbar("Taschenrechner")
+# Fenster.wait_key()
