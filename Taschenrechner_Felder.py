@@ -2,9 +2,10 @@ import cv2
 
 class Feld:
 
-    def __init__(self, rechner, bildspeicher):
+    def __init__(self, rechner, bildspeicher, datenbank):
         self.rechner = rechner
         self.bildspeicher = bildspeicher
+        self.datenbank = datenbank
 
     def rechenterm_anzeigen(self, zahl1, zahl2, rechenzeichen, index):
         bild = self.bildspeicher.get_bild(index)
@@ -16,4 +17,8 @@ class Feld:
 
     def feld_erkennung(self, feldx1, feldx2, feldy1, feldy2, handx, handy):
         return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
+
+    def kontur(self):
+        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY)
+        minimalgröße = self.datenbank.size
 
