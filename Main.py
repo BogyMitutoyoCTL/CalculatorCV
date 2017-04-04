@@ -41,7 +41,7 @@ while True:
     felder.rechenterm_anzeigen(3, 2, "+", bildspeicher.BGR2)
     bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.BGR2, fenster)
     fenster.wait_key()
-    feld.draw_feld()
+    feld.draw_feld(bildspeicher.BGR)
     bildspeicher.bild_anzeigen(True,"Bilder", bildspeicher.BGR, fenster)
     fenster.wait_key()
     felder.kontur()
