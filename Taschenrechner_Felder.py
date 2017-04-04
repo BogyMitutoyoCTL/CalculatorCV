@@ -41,17 +41,6 @@ class FeldActions:
             else:
                 self.bildspeicher.add_bild(None, self.bildspeicher.KONTUR)
 
-            #if index is None:
-            #    index = [0, 0]
-            #if index[0] is None:
-            #    index[0] = 0
-            #if index[1] is None:
-            #    index[1] = 0
-            #if konturen is not None:
-            #    self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
-
-
-
     def max_kontur(self, konturen, minimalgröße):
         max_area = 0
         index = None
@@ -66,3 +55,13 @@ class FeldActions:
             if index2 < minimalgröße:
                 index2 = None
         return [index, index2]
+
+    def kontur_mittelpunkt(self):
+        M = cv2.moments(self.datenbank.get_kontur(0))
+        if M["m00"] != 0:
+            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+
+        else:
+            center = None, None
+
+        print(center)
