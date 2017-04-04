@@ -18,11 +18,26 @@ class FeldActions:
         return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
 
     def kontur(self):
-        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY)
+        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY2)
         ausgangsbild2 = self.bildspeicher.get_bild(self.bildspeicher.BGR2)
         minimalgröße = self.datenbank.size
         _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if konturen is not None:
             print(konturen)
-            bild_mit_konturen = cv2.drawContours(ausgangsbild2, [konturen[0]], 0, (255, 255, 255))
+            index = self.max_kontur(konturen)
+            bild_mit_konturen = cv2.drawContours(ausgangsbild2, [konturen[index[0]]], 0, (255, 255, 255), 2  )
+            bild_mit_konturen = cv2.drawContours(ausgangsbild2, [konturen[index[1]]], 0, (255, 255, 255), 2)
             self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
+
+
+    def max_kontur(self, konturen):
+        max_area = 0
+        index = 0
+        index2 = 0
+        for i in range(len(konturen)):
+            area = cv2.contourArea(konturen[i])
+            if area > max_area:
+                max_area = area
+                index2 = i
+                index = index2
+        return [index, index2]
