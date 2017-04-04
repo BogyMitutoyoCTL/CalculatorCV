@@ -47,4 +47,4 @@ while True:
     felder.kontur()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
     felder.kontur_mittelpunkt()
-    fenster.wait_key
+    fenster.wait_key()
