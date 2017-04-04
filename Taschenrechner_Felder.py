@@ -101,13 +101,9 @@ class FeldActions:
 
 
     def finger(self):
-        kontur1 = self.datenbank.konturen[0]
-        kontur2 = self.datenbank.konturen[1]
         mitte1 = self.datenbank.get_center1()
         mitte2 = self.datenbank.get_center2()
         ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY2)
-        faktor = 0.65
-
         self.datenbank.set_radius()
         radius = self.datenbank.get_radius()
 
@@ -119,3 +115,11 @@ class FeldActions:
             bild2 = ausgangsbild
 
         self.bildspeicher.add_bild(bild2, self.bildspeicher.CIRCLES)
+
+        _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        anzahl = len(konturen) -2
+        if mitte1 == (0, 0):
+            anzahl += 1
+        if mitte2 == (0, 0):
+            anzahl += 1
+        self.datenbank.anzahl_finger = anzahl

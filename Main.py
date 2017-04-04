@@ -53,6 +53,7 @@ while True:
     print(datenbank.get_center1(), datenbank.get_center2())
     fenster.wait_key()
     felder.finger()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.CIRCLES, fenster)
+    felder.rechenterm_anzeigen(bildspeicher.CIRCLES, datenbank.anzahl_finger)
+    bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.CIRCLES, fenster)
     fenster.wait_key()
     datenbank.reset()

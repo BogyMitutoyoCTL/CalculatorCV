@@ -12,6 +12,7 @@ class Datenbank():
         self.konturen = [0, 0]
         self.center1 = None
         self.radius = None
+        self.anzahl_finger = 0
 
     def change_lower_h(self, wert):
         self.lower_h = wert
@@ -62,10 +63,18 @@ class Datenbank():
             if kontur1 is not None:
                 (_, _), radius1 = cv2.minEnclosingCircle(kontur1)
                 radius1 = int(radius1)
+            else:
+                radius1 = 0
             if kontur2 is not None:
                 (_, _), radius2 = cv2.minEnclosingCircle(kontur2)
                 radius2 = int(radius2)
-            if radius1 is not None and radius2 is not None:
+            else:
+                radius2 = 0
+            if radius1 is not None or radius2 is not None:
+                if radius1 is None:
+                    radius1 = 0
+                if radius2 is None:
+                    radius2 = 0
                 if radius1 < radius2:
                     radius = radius2
                 else:
