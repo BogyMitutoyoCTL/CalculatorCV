@@ -39,7 +39,7 @@ class FeldActions:
 
 
             else:
-                self.bildspeicher.add_bild(None, self.bildspeicher.KONTUR)
+                self.bildspeicher.add_bild(ausgangsbild2, self.bildspeicher.KONTUR)
 
             #if index is None:
             #    index = [0, 0]
