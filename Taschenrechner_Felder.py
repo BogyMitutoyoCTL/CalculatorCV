@@ -59,9 +59,25 @@ class FeldActions:
     def kontur_mittelpunkt(self):
         M = cv2.moments(self.datenbank.get_kontur(0))
         if M["m00"] != 0:
-            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+            center1 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
         else:
-            center = None, None
+            center1 = (0, 0)
 
-        print(center)
+        #print(center1)
+        M = cv2.moments(self.datenbank.get_kontur(1))
+        if M["m00"] != 0:
+            center2 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+
+        else:
+            center2 = (0, 0)
+
+        print(center1, center2)
+
+        if center1 is not (0, 0):
+            kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center1, 50, (255, 255, 255))
+            self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.BGR2)
+
+        if center2 is not (0, 0):
+            kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
+            self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.BGR2)

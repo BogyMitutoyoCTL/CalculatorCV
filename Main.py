@@ -46,5 +46,8 @@ while True:
     fenster.wait_key()
     felder.kontur()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
+    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
+    fenster.wait_key()
     felder.kontur_mittelpunkt()
+    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR2, fenster)
     fenster.wait_key()
