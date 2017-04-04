@@ -17,7 +17,7 @@ tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
 fenster = Taschenrechner_Fenster.Window(datenbank, tools)
 rechner = Rechner.Rechner()
 felder = Taschenrechner_Felder.FeldActions(rechner, bildspeicher, datenbank)
-feld = Klasse_Feld.Feld(40, 60, 40, 60,bildspeicher)
+feld = Klasse_Feld.Feld(40, 60, 40, 60, bildspeicher)
 
 
 fenster.create_window("Bilder")
@@ -31,6 +31,9 @@ while True:
     fenster.wait_key()
     tools.glove_filter()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY, fenster)
+    fenster.wait_key()
+    tools.blur(5, 5)
+    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY2, fenster)
     fenster.wait_key()
     tools.color_glove()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR2, fenster)

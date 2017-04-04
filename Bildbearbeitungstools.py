@@ -21,3 +21,8 @@ class Bildbearbeitungstools():
         source = self.bildspeicher.get_bild(self.bildspeicher.BGR)
         bgr2_bild = cv2.bitwise_and(source, 1, source, umgedreht)
         self.bildspeicher.add_bild(bgr2_bild, self. bildspeicher.BGR2)
+
+    def blur(self, breite, höhe):
+        blur_bild = cv2.blur(self.bildspeicher.get_bild(self.bildspeicher.GRAY), (breite, höhe))
+        blurgray_bild = cv2.inRange(blur_bild, (100), (255))
+        self.bildspeicher.add_bild(blurgray_bild, self.bildspeicher.GRAY2)
