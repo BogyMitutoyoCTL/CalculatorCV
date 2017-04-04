@@ -1,6 +1,6 @@
 class Datenbank():
     def __init__(self):
-        self.upper_h = 69
+        self.upper_h = 40
         self.lower_h = 52
         self.upper_s = 255
         self.lower_s = 108
