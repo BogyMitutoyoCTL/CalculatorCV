@@ -1,3 +1,4 @@
+# coding: utf-8
 import Taschenrechner_Bild
 import Bildbearbeitungstools
 import Bildspeicher
