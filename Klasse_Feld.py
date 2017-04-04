@@ -10,4 +10,4 @@ class Feld:
 
     def draw_feld(self):
         bild_mit_feld = cv2.rectangle(self.bildspeicher.get_bild(self.bildspeicher.BGR), self.punkt1, self.punkt2,self.color)
-        self.bildspeicher.add_bild_mit_fenster(bild_mit_feld, self.bildspeicher.BGR)
+        self.bildspeicher.add_bild_mit_felder(bild_mit_feld, self.bildspeicher.BGR)
