@@ -5,6 +5,7 @@ import Datenbank
 import Taschenrechner_Fenster
 import Taschenrechner_Felder
 import Rechner
+import Klasse_Feld
 
 
 
@@ -15,8 +16,8 @@ camera = Taschenrechner_Bild.Picture(bildspeicher)
 tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
 fenster = Taschenrechner_Fenster.Window(datenbank, tools)
 rechner = Rechner.Rechner()
-felder = Taschenrechner_Felder.Feld(rechner, bildspeicher)
-
+felder = Taschenrechner_Felder.FeldActions(rechner, bildspeicher)
+feld = Klasse_Feld.Feld(bildspeicher)
 
 
 fenster.create_window("Bilder")
@@ -33,6 +34,6 @@ fenster.wait_key()
 tools.color_glove()
 bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR2, fenster)
 fenster.wait_key()
-felder.rechenterm_anzeigen(3, 2, "+", bildspeicher.GRAY)
-bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.GRAY, fenster)
+felder.rechenterm_anzeigen(3, 2, "+", bildspeicher.BGR2)
+bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.BGR2, fenster)
 fenster.wait_key()
