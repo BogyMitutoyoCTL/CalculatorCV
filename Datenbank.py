@@ -36,3 +36,7 @@ class Datenbank():
     def get_kontur(self, index):
         return self.konturen[index]
 
+    def reset(self):
+        self.konturen = [0, 0]
+
+
