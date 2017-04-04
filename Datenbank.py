@@ -1,11 +1,11 @@
 class Datenbank():
     def __init__(self):
-        self.upper_h = 0
-        self.lower_h = 0
-        self.upper_s = 0
-        self.lower_s = 0
-        self.upper_v = 0
-        self.lower_v = 0
+        self.upper_h = 69
+        self.lower_h = 52
+        self.upper_s = 255
+        self.lower_s = 108
+        self.upper_v = 146
+        self.lower_v = 32
         self.size = 0
 
     def change_lower_h(self, wert):
