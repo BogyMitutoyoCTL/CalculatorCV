@@ -1,13 +1,14 @@
 class Bildspeicher():
     def __init__(self):
-        self.bilder = [0, 0, 0, 0, 0, 0]
-        self.bilder_mit_feldern = [0, 0, 0, 0, 0, 0]
+        self.bilder = [0, 0, 0, 0, 0, 0,0]
+        self.bilder_mit_feldern = [0, 0, 0, 0, 0, 0, 0]
         self.BGR = 0
         self.HSV = 1
         self.GRAY = 2
         self.BGR2 = 3
         self.KONTUR = 4
         self.GRAY2 = 5
+        self.MITTE = 6
 
     def add_bild(self, bild, index):
         self.bilder[index] = bild

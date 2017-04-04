@@ -8,6 +8,7 @@ class Datenbank():
         self.lower_v = 32
         self.size = 0
         self.konturen = [0, 0]
+        self.center1 = None
 
     def change_lower_h(self, wert):
         self.lower_h = wert
@@ -35,6 +36,18 @@ class Datenbank():
 
     def get_kontur(self, index):
         return self.konturen[index]
+
+    def set_center1(self, center1):
+        self.center1 = center1
+
+    def get_center1(self):
+        return self.center1
+
+    def set_center2(self, center2):
+        self.center2 = center2
+
+    def get_center2(self):
+        return self.center2
 
     def reset(self):
         self.konturen = [0, 0]

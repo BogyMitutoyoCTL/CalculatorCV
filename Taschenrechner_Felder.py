@@ -64,7 +64,6 @@ class FeldActions:
         else:
             center1 = (0, 0)
 
-        #print(center1)
         M = cv2.moments(self.datenbank.get_kontur(1))
         if M["m00"] != 0:
             center2 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
@@ -72,12 +71,13 @@ class FeldActions:
         else:
             center2 = (0, 0)
 
-        print(center1, center2)
+        self.datenbank.set_center1(center1)
+        self.datenbank.set_center2(center2)
 
-        if center1 is not (0, 0):
-            kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center1, 50, (255, 255, 255))
-            self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.BGR2)
+        #print(center1, center2)
 
-        if center2 is not (0, 0):
-            kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
-            self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.BGR2)
+        #kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center1, 50, (255, 255, 255))
+        #self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
+
+        #kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
+        #self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
