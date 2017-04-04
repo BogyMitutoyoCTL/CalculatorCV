@@ -32,25 +32,37 @@ class FeldActions:
                     bild_mit_konturen_2 = cv2.drawContours(bild_mit_konturen, [konturen[index[1]]], 0, (255, 255, 255), 2)
 
                     self.bildspeicher.add_bild(bild_mit_konturen_2, self.bildspeicher.KONTUR)
+                    self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
                 else:
                     self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
+                    self.datenbank.set_konturen([konturen[index[0]], None])
+
 
             else:
                 self.bildspeicher.add_bild(None, self.bildspeicher.KONTUR)
-            self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
+
+            #if index is None:
+            #    index = [0, 0]
+            #if index[0] is None:
+            #    index[0] = 0
+            #if index[1] is None:
+            #    index[1] = 0
+            #if konturen is not None:
+            #    self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
 
 
 
     def max_kontur(self, konturen, minimalgröße):
         max_area = 0
-        index = 0
-        index2 = 0
+        index = None
+        index2 = None
         for i in range(len(konturen)):
             area = cv2.contourArea(konturen[i])
             if area > max_area:
                 max_area = area
                 index2 = index
                 index = i
-        if index2 < minimalgröße:
-            index2 = None
+        if index2 is not None:
+            if index2 < minimalgröße:
+                index2 = None
         return [index, index2]
