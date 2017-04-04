@@ -31,6 +31,7 @@ class FeldActions:
                 self.bildspeicher.add_bild(bild_mit_konturen_2, self.bildspeicher.KONTUR)
             else:
                 self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
+            self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
 
 
     def max_kontur(self, konturen, minimalgröße):
