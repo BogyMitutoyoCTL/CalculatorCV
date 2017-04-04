@@ -20,7 +20,10 @@ class Feld:
 
     def kontur(self):
         ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY)
+        ausgangsbild2 = self.bildspeicher.get_bild(self.bildspeicher.BGR2)
         minimalgröße = self.datenbank.size
         _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        bild_mit_konturen = cv2.drawContours(ausgangsbild, [konturen], 0, (255, 255, 255))
-        self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
+        if konturen is not None:
+            print(konturen)
+            bild_mit_konturen = cv2.drawContours(ausgangsbild2, [konturen[0]], 0, (255, 255, 255))
+            self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
