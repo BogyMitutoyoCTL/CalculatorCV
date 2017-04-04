@@ -16,6 +16,8 @@ camera = Taschenrechner_Bild.Picture(bildspeicher)
 tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
 fenster = Taschenrechner_Fenster.Window(datenbank, tools)
 rechner = Rechner.Rechner()
+felder = Taschenrechner_Felder.Feld(rechner, bildspeicher, datenbank)
+
 felder = Taschenrechner_Felder.FeldActions(rechner, bildspeicher)
 feld = Klasse_Feld.Feld(bildspeicher)
 
