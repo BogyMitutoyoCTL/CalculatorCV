@@ -1,3 +1,5 @@
+import cv2
+
 class Datenbank():
     def __init__(self):
         self.upper_h = 69
@@ -9,6 +11,7 @@ class Datenbank():
         self.size = 0
         self.konturen = [0, 0]
         self.center1 = None
+        self.radius = None
 
     def change_lower_h(self, wert):
         self.lower_h = wert
@@ -51,5 +54,27 @@ class Datenbank():
 
     def reset(self):
         self.konturen = [0, 0]
+
+    def set_radius(self):
+        if self.radius is None:
+            kontur1 = self.konturen[0]
+            kontur2 = self.konturen[1]
+            if kontur1 is not None:
+                (_, _), radius1 = cv2.minEnclosingCircle(kontur1)
+                radius1 = int(radius1)
+            if kontur2 is not None:
+                (_, _), radius2 = cv2.minEnclosingCircle(kontur2)
+                radius2 = int(radius2)
+            if radius1 is not None and radius2 is not None:
+                if radius1 < radius2:
+                    radius = radius2
+                else:
+                    radius = radius1
+                self.radius = int(0.75 * radius)
+            else:
+                self.radius = None
+
+    def get_radius(self):
+        return self.radius
 
 

@@ -47,7 +47,7 @@ class FeldActions:
         index2 = None
         for i in range(len(konturen)):
             area = cv2.contourArea(konturen[i])
-            if area > max_area:
+            if area >= max_area:
                 max_area = area
                 index2 = index
                 index = i
@@ -64,6 +64,7 @@ class FeldActions:
         else:
             center1 = (0, 0)
 
+        #print(center1)
         M = cv2.moments(self.datenbank.get_kontur(1))
         if M["m00"] != 0:
             center2 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
@@ -76,8 +77,32 @@ class FeldActions:
 
         #print(center1, center2)
 
-        #kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center1, 50, (255, 255, 255))
-        #self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
+        # kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center1, 50, (255, 255, 255))
+        # self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
 
-        #kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
-        #self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
+        # kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
+        # self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
+
+
+
+
+
+    def finger(self):
+        kontur1 = self.datenbank.konturen[0]
+        kontur2 = self.datenbank.konturen[1]
+        mitte1 = self.datenbank.get_center1()
+        mitte2 = self.datenbank.get_center2()
+        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY2)
+        faktor = 0.65
+
+        self.datenbank.set_radius()
+        radius = self.datenbank.get_radius()
+
+
+        if radius is not None:
+            bild1 = cv2.circle(ausgangsbild, mitte1, radius, (0, 0, 0), -1)
+            bild2 = cv2.circle(bild1, mitte2, radius, (0, 0, 0), -1)
+        else:
+            bild2 = ausgangsbild
+
+        self.bildspeicher.add_bild(bild2, self.bildspeicher.CIRCLES)
