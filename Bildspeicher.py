@@ -7,6 +7,7 @@ class Bildspeicher():
         self.GRAY = 2
         self.BGR2 = 3
         self.KONTUR = 4
+        self.GRAY2 = 5
 
 
     def add_bild(self, bild, index):
