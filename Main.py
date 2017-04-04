@@ -38,7 +38,7 @@ while True:
     tools.color_glove()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR2, fenster)
     fenster.wait_key()
-    felder.rechenterm_anzeigen(3, 2, "+", bildspeicher.BGR2)
+    felder.rechenterm_anzeigen( bildspeicher.BGR2, 3, "+", 4)
     bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.BGR2, fenster)
     fenster.wait_key()
     feld.draw_feld(bildspeicher.BGR)
