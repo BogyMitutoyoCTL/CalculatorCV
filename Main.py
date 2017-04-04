@@ -44,3 +44,6 @@ while True:
     feld.draw_feld()
     bildspeicher.bild_anzeigen(True,"Bilder", bildspeicher.BGR, fenster)
     fenster.wait_key()
+    felder.kontur()
+    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
+    fenster.wait_key()
