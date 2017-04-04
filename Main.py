@@ -32,7 +32,7 @@ while True:
     tools.glove_filter()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY, fenster)
     fenster.wait_key()
-    tools.blur(5, 5)
+    tools.blur(10, 10)
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY2, fenster)
     fenster.wait_key()
     tools.color_glove()
@@ -46,4 +46,5 @@ while True:
     fenster.wait_key()
     felder.kontur()
     bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
-    fenster.wait_key()
+    felder.kontur_mittelpunkt()
+    fenster.wait_key
