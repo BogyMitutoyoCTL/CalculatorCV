@@ -5,7 +5,7 @@ class Bildspeicher():
         self.BGR = 0
         self.HSV = 1
         self.GRAY = 2
-        self.HSV2 = 3
+        self.BGR2 = 3
 
     def add_bild(self, bild, index):
         self.bilder[index] = bild
