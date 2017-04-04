@@ -9,22 +9,21 @@ class Bildspeicher():
         self.KONTUR = 4
         self.GRAY2 = 5
 
-
     def add_bild(self, bild, index):
         self.bilder[index] = bild
 
     def get_bild(self, index):
         return self.bilder[index]
 
-    def add_bild_mit_fenster(self, bild_mit_feldern, index):
+    def add_bild_mit_felder(self, bild_mit_feldern, index):
         self.bilder_mit_feldern[index] = bild_mit_feldern
 
-    def get_bild_mit_fenster(self, index):
+    def get_bild_mit_felder(self, index):
         return self.bilder_mit_feldern[index]
 
     def bild_anzeigen(self, felder_ja_nein, fenstername, index, window):
         if felder_ja_nein is True:
-            bild = self.get_bild_mit_fenster(index)
+            bild = self.get_bild_mit_felder(index)
         else:
             bild = self.get_bild(index)
 
