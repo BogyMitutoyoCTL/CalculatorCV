@@ -10,7 +10,6 @@ class Window:
         cv2.namedWindow(window_name)
         self.image_width_px = 1080
 
-
     def show_picture(self, picture):
         cv2.imshow(self.window_name, picture)
         # TODO: hack
