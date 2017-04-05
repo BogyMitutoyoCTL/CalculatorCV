@@ -8,7 +8,7 @@ class ButtonGenerator:
         self.MitutoyoFarbe = (54, 120, 244)
 
     def generate(self):
-        # TODO: Liste mit 4 Buttons erzeugen und zurückgeben
+        # TODO: Liste mit 4 Buttons erzeugen und zurückgeben (paul)
         pass
 
     def addieren(self):
