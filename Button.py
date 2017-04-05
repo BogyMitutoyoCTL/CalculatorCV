@@ -12,7 +12,7 @@ class Button:
     # TODO: move to GUI or delete (Paul)
     def draw_feld(self, index):
         bild_mit_feld = cv2.rectangle(self.picture_storage.get_picture(index), self.top_left, self.bottom_right, self.color)
-        self.picture_storage.add_picture_mit_felder(bild_mit_feld, index)
+        self.picture_storage.add_picture(bild_mit_feld, self.picture_storage.ORIGINAL_WITH_FELD)
 
     def get_top_x(self):
         return self.top_left[0]

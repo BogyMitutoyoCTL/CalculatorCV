@@ -21,9 +21,6 @@ class PictureStorage():
     def get_picture(self, index):
         return self.pictures[index]
 
-    def add_picture_mit_felder(self, bild_mit_feldern, index):
-        self.bilder_mit_feldern[index] = bild_mit_feldern
-
     def get_picture_mit_felder(self, index):
         return self.bilder_mit_feldern[index]
 
