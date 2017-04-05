@@ -1,0 +1,38 @@
+class PictureStorage():
+    def __init__(self):
+        self.pictures = [None, None, None, None, None, None, None, None, None]
+        # TODO: remove (Ann-Sophie)
+        self.bilder_mit_feldern = [None, None, None, None, None, None, None, None]
+
+        # Constants for picture indexes
+        self.ORIGINAL_FROM_CAMERA_BGR = 0
+        self.CAMERA_CONVERTED_HSV = 1
+        self.GLOVES_BW = 2
+        self.GLOVES_BLURRED_BW = 5
+        self.GLOVES_WITH_ORIGINAL_BGR = 3
+        self.CONTOUR_OF_GLOVES_BGR = 4
+        self.CIRCLE_CENTER_BGR = 7
+        self.CIRCLES_ON_GLOVES_BW = 6
+        self.ORIGINAL_WITH_FELD = 8
+
+    def add_picture(self, bild, index):
+        self.pictures[index] = bild
+
+    def get_picture(self, index):
+        return self.pictures[index]
+
+    def add_picture_mit_felder(self, bild_mit_feldern, index):
+        self.bilder_mit_feldern[index] = bild_mit_feldern
+
+    def get_picture_mit_felder(self, index):
+        return self.bilder_mit_feldern[index]
+
+    def show_picture(self, felder_ja_nein, index, window):
+        if felder_ja_nein is True:
+            bild = self.get_picture_mit_felder(index)
+        else:
+            bild = self.get_picture(index)
+
+        window.show_picture(bild)
+
+

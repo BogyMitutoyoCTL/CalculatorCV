@@ -1,49 +1,54 @@
-import Taschenrechner_Bild
-import Bildbearbeitungstools
-import Bildspeicher
-import Datenbank
-import Taschenrechner_Fenster
-import Taschenrechner_Felder
-import Rechner
-import Klasse_Feld
+from Camera import Camera
+import ImageProcessing
+from PictureStorage import PictureStorage
+import Settings
+from Window import Window
+import GUI
+import Calculator
+import Button
 
 
 
 
-bildspeicher = Bildspeicher.Bildspeicher()
-datenbank = Datenbank.Datenbank()
-camera = Taschenrechner_Bild.Picture(bildspeicher)
-tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
-fenster = Taschenrechner_Fenster.Window(datenbank, tools)
-rechner = Rechner.Rechner()
-felder = Taschenrechner_Felder.FeldActions(rechner, bildspeicher, datenbank)
-feld = Klasse_Feld.Feld(40, 60, 40, 60, bildspeicher)
+picture_storage = PictureStorage()
+settings = Settings.Settings()
+camera = Camera()
+tools = ImageProcessing.ImageProcessing(picture_storage, settings)
+window = Window(settings, tools, "Bilder")
+rechner = Calculator.Calculator()
+felder = GUI.GUI(rechner, picture_storage, settings)
+feld = Button.Button(40, 60, 40, 60, picture_storage)
 
 
-fenster.create_window("Bilder")
-fenster.create_Trackbar("Bilder")
+window.create_trackbars()
 while True:
-    camera.save_picture()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR, fenster)
-    fenster.wait_key()
-    tools.convert_brg2hsv()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.HSV, fenster)
-    fenster.wait_key()
+    camera_picture = camera.get_picture()
+    picture_storage.add_picture(camera_picture, picture_storage.ORIGINAL_FROM_CAMERA_BGR)
+    picture_storage.show_picture(False, picture_storage.ORIGINAL_FROM_CAMERA_BGR, window)
+    window.wait_key()
+    camera_converted_to_hsv = tools.convert_to_hsv(camera_picture)
+    picture_storage.add_picture(camera_converted_to_hsv, picture_storage.CAMERA_CONVERTED_HSV)
+    picture_storage.show_picture(False, picture_storage.CAMERA_CONVERTED_HSV, window)
+    window.wait_key()
     tools.glove_filter()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY, fenster)
-    fenster.wait_key()
-    tools.blur(5, 5)
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.GRAY2, fenster)
-    fenster.wait_key()
+    picture_storage.show_picture(False, picture_storage.GLOVES_BW, window)
+    window.wait_key()
+    tools.blur(10)
+    picture_storage.show_picture(False, picture_storage.GLOVES_BLURRED_BW, window)
+    window.wait_key()
     tools.color_glove()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.BGR2, fenster)
-    fenster.wait_key()
-    felder.rechenterm_anzeigen(3, 2, "+", bildspeicher.BGR2)
-    bildspeicher.bild_anzeigen(True, "Bilder", bildspeicher.BGR2, fenster)
-    fenster.wait_key()
-    feld.draw_feld(bildspeicher.BGR)
-    bildspeicher.bild_anzeigen(True,"Bilder", bildspeicher.BGR, fenster)
-    fenster.wait_key()
+    picture_storage.show_picture(False, picture_storage.GLOVES_WITH_ORIGINAL_BGR, window)
+    window.wait_key()
+    felder.paint_term(picture_storage.GLOVES_WITH_ORIGINAL_BGR, 3, "/", 4)
+    picture_storage.show_picture(True, picture_storage.GLOVES_WITH_ORIGINAL_BGR, window)
+    window.wait_key()
     felder.kontur()
-    bildspeicher.bild_anzeigen(False, "Bilder", bildspeicher.KONTUR, fenster)
-    fenster.wait_key()
+    picture_storage.show_picture(False, picture_storage.CONTOUR_OF_GLOVES_BGR, window)
+    window.wait_key()
+    felder.kontur_mittelpunkt()
+    print(settings.get_center1(), settings.get_center2())
+    felder.count_fingers()
+    felder.paint_term(picture_storage.CIRCLES_ON_GLOVES_BW, settings.finger_count)
+    picture_storage.show_picture(True, picture_storage.CIRCLES_ON_GLOVES_BW, window)
+    window.wait_key()
+    settings.reset()
