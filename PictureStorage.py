@@ -1,8 +1,6 @@
 class PictureStorage():
     def __init__(self):
         self.pictures = [None, None, None, None, None, None, None, None, None]
-        # TODO: remove (Ann-Sophie)
-        self.bilder_mit_feldern = [None, None, None, None, None, None, None, None]
 
         # Constants for picture indexes
         self.ORIGINAL_FROM_CAMERA_BGR = 0

@@ -29,7 +29,7 @@ class ImageProcessing():
 
     def color_glove(self):
         mask = cv2.bitwise_not(self.picture_storage.get_picture(self.picture_storage.GLOVES_BLURRED_BW))
-        source = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
+        source = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR).copy()
         glove_combined = cv2.bitwise_and(source, self.ALL_CHANNELS, source, mask)
         self.picture_storage.add_picture(glove_combined, self. picture_storage.GLOVES_WITH_ORIGINAL_BGR)
 
