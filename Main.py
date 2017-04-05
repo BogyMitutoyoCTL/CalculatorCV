@@ -40,7 +40,11 @@ while True:
     felder.paint_term(3, "/", None, 1)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     window.wait_key()
-    # hands = tools.get_hands(blurred_picture, settings.minimum_recognition_size_px, 2)
-    # for Hand in hands:
-    #     Hand.get_center()
-    #     Hand.count_fingers()
+    hands = tools.get_hands(blurred_picture, settings.minimum_recognition_size_px, 2)
+    for hand in hands:
+        print(hand.center)
+        hand.get_center()
+        print(hand.center)
+        hand.fingers(blurred_picture)
+    window.show_picture(tools.draw_hands(hands, blurred_picture))
+    window.wait_key()

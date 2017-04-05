@@ -51,7 +51,8 @@ class ImageProcessing():
             picture_with_hands = cv2.drawContours(picture_with_hands, hand.contour, 0, (255, 255, 255), 2)
             picture_with_hands = cv2.circle(picture_with_hands, hand.center, 5, (255, 0, 0), -1)
             count_fingers += hand.count_fingers
-        picture_with_hands = cv2.putText(picture_with_hands, count_fingers, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 0), 3)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(picture_with_hands, str(count_fingers), (0, 100), font, 3, (255, 255, 255), 3)
         return picture_with_hands
 
     def get_indexes_of_contours_bigger_than_minimal(self, contours, minimal_size_in_pixel, count):
