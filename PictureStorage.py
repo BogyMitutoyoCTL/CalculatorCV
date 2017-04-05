@@ -27,12 +27,4 @@ class PictureStorage():
     def get_picture_mit_felder(self, index):
         return self.bilder_mit_feldern[index]
 
-    def show_picture(self, felder_ja_nein, index, window):
-        if felder_ja_nein is True:
-            bild = self.get_picture_mit_felder(index)
-        else:
-            bild = self.get_picture(index)
-
-        window.show_picture(bild)
-
 
