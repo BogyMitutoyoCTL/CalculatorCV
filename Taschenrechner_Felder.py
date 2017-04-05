@@ -1,37 +1,39 @@
 import cv2
+from PictureStorage import PictureStorage
+from Datenbank import Datenbank
 
 class FeldActions:
 
-    def __init__(self, rechner, bildspeicher, datenbank):
+    def __init__(self, rechner, bildspeicher : PictureStorage, datenbank : Datenbank):
         self.rechner = rechner
         self.bildspeicher = bildspeicher
         self.datenbank = datenbank
 
     def rechenterm_anzeigen(self, index, zahl1, rechenzeichen=None, zahl2=None, reset=None):
-        bild = self.bildspeicher.get_bild(index)
+        bild = self.bildspeicher.get_picture(index)
 
         if zahl2 is None and rechenzeichen is None:
             string = str(zahl1)
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-            self.bildspeicher.add_bild_mit_felder(bild_mit_text, index)
+            self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
         if zahl2 is None and rechenzeichen is not None:
             string = str(zahl1) + " " + rechenzeichen
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-            self.bildspeicher.add_bild_mit_felder(bild_mit_text, index)
+            self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
         if zahl2 is not None and rechenzeichen is not None:
             ergebnis = self.rechner.rechne(zahl1, zahl2, rechenzeichen)
             string = str(zahl1) + " " + rechenzeichen + " " + str(zahl2) + " " + "=" + "  " + str(ergebnis)
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-            self.bildspeicher.add_bild_mit_felder(bild_mit_text, index)
+            self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
     def feld_erkennung(self, feldx1, feldx2, feldy1, feldy2, handx, handy):
         return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
 
     def kontur(self):
-        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY2)
-        ausgangsbild2 = self.bildspeicher.get_bild(self.bildspeicher.BGR2)
+        ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
+        ausgangsbild2 = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_WITH_ORIGINAL_BGR)
         minimalgröße = self.datenbank.size
         _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if konturen is not None:
@@ -43,15 +45,15 @@ class FeldActions:
                 if index[1] is not None:
                     bild_mit_konturen_2 = cv2.drawContours(bild_mit_konturen, [konturen[index[1]]], 0, (255, 255, 255), 2)
 
-                    self.bildspeicher.add_bild(bild_mit_konturen_2, self.bildspeicher.KONTUR)
+                    self.bildspeicher.add_picture(bild_mit_konturen_2, self.bildspeicher.CONTOUR_OF_GLOVES_BGR)
                     self.datenbank.set_konturen([konturen[index[0]], konturen[index[1]]])
                 else:
-                    self.bildspeicher.add_bild(bild_mit_konturen, self.bildspeicher.KONTUR)
+                    self.bildspeicher.add_picture(bild_mit_konturen, self.bildspeicher.CONTOUR_OF_GLOVES_BGR)
                     self.datenbank.set_konturen([konturen[index[0]], None])
 
 
             else:
-                self.bildspeicher.add_bild(ausgangsbild2, self.bildspeicher.KONTUR)
+                self.bildspeicher.add_picture(ausgangsbild2, self.bildspeicher.CONTOUR_OF_GLOVES_BGR)
 
     def max_kontur(self, konturen, minimalgröße):
         max_area = 0
@@ -101,7 +103,7 @@ class FeldActions:
     def finger(self):
         mitte1 = self.datenbank.get_center1()
         mitte2 = self.datenbank.get_center2()
-        ausgangsbild = self.bildspeicher.get_bild(self.bildspeicher.GRAY2)
+        ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
         self.datenbank.set_radius()
         radius = self.datenbank.get_radius()
 
@@ -112,7 +114,7 @@ class FeldActions:
         else:
             bild2 = ausgangsbild
 
-        self.bildspeicher.add_bild(bild2, self.bildspeicher.CIRCLES)
+        self.bildspeicher.add_picture(bild2, self.bildspeicher.CIRCLES_ON_GLOVES_BW)
 
         _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         anzahl = len(konturen) -2

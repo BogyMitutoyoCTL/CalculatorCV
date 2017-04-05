@@ -14,9 +14,7 @@ LITTLE_COLOR = 10
 
 class Camera:
 
-    def __init__(self, bildspeicher):
-        self.image = None
-        self.bildspeicher = bildspeicher
+    def __init__(self):
         if systemIsWindows:
             self.camera = WindowsCamera()
         else:
@@ -26,9 +24,8 @@ class Camera:
         if not(self.camera_is_available()):
             raise RuntimeError("No camera is available. Is the program already running?")
 
-    def save_picture(self):
-        self.image = self.camera.get_next_frame()
-        self.bildspeicher.add_bild(self.image, self.bildspeicher.BGR)
+    def get_picture(self):
+        return self.camera.get_next_frame()
 
     def camera_is_available(self):
         image = self.camera.get_next_frame()

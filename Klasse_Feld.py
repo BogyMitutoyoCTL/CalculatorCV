@@ -9,8 +9,8 @@ class Feld:
         self.color = (255, 255, 255)
 
     def draw_feld(self, index):
-        bild_mit_feld = cv2.rectangle(self.bildspeicher.get_bild(index), self.punkt1, self.punkt2,self.color)
-        self.bildspeicher.add_bild_mit_felder(bild_mit_feld, index)
+        bild_mit_feld = cv2.rectangle(self.bildspeicher.get_picture(index), self.punkt1, self.punkt2, self.color)
+        self.bildspeicher.add_picture_mit_felder(bild_mit_feld, index)
 
     def set_punkt_1_x(self, wert):
         self.punkt1 = (wert, self.punkt1[0])
