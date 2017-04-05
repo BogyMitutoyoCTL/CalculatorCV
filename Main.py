@@ -2,7 +2,7 @@ from Camera import Camera
 import Bildbearbeitungstools
 import Bildspeicher
 import Datenbank
-import Taschenrechner_Fenster
+from Window import Window
 import Taschenrechner_Felder
 import Rechner
 import Klasse_Feld
@@ -14,7 +14,7 @@ bildspeicher = Bildspeicher.Bildspeicher()
 datenbank = Datenbank.Datenbank()
 camera = Camera(bildspeicher)
 tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
-fenster = Taschenrechner_Fenster.Window(datenbank, tools, "Bilder")
+fenster = Window(datenbank, tools, "Bilder")
 rechner = Rechner.Rechner()
 felder = Taschenrechner_Felder.FeldActions(rechner, bildspeicher, datenbank)
 feld = Klasse_Feld.Feld(40, 60, 40, 60, bildspeicher)
