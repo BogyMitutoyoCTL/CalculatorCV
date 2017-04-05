@@ -5,7 +5,8 @@ import Settings
 from Window import Window
 import GUI
 import Calculator
-import Button
+from Button import Button
+from ButtonGenerator import ButtonGenerator
 
 
 picture_storage = PictureStorage()
@@ -15,7 +16,8 @@ tools = ImageProcessing.ImageProcessing(picture_storage, settings)
 window = Window(settings, tools, "Bilder")
 rechner = Calculator.Calculator()
 felder = GUI.GUI(rechner, picture_storage, settings)
-feld = Button.Button(40, 60, 40, 60, picture_storage)
+
+
 
 
 window.create_trackbars()
@@ -23,7 +25,17 @@ while True:
     camera_picture = camera.get_picture()
     picture_storage.add_picture(camera_picture, picture_storage.ORIGINAL_FROM_CAMERA_BGR)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_FROM_CAMERA_BGR))
+
+    TestFenster = ButtonGenerator(picture_storage)
+    fields = TestFenster.draw_all_buttons()
+    for field in fields:
+        field_picture = field.draw_field(camera_picture)
+
+
+    window.show_picture(field_picture)
+
     window.wait_key()
+
 
     camera_converted_to_hsv = tools.convert_to_hsv(camera_picture)
     picture_storage.add_picture(camera_converted_to_hsv, picture_storage.CAMERA_CONVERTED_HSV)

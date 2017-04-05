@@ -28,11 +28,7 @@ class GUI:
             image_with_text = cv2.putText(image, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
             self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
 
-    # TODO: move to Rectangle
-    def feld_erkennung(self, feldx1, feldx2, feldy1, feldy2, handx, handy):
-        return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
-
-    # TODO: move to ImageProcessing
+ # TODO: move to ImageProcessing
     def kontur(self):
         ausgangsbild = self.picture_storage.get_picture(self.picture_storage.GLOVES_BLURRED_BW)
         ausgangsbild2 = self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR)
