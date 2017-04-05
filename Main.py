@@ -8,8 +8,6 @@ import Calculator
 import Button
 
 
-
-
 picture_storage = PictureStorage()
 settings = Settings.Settings()
 camera = Camera()

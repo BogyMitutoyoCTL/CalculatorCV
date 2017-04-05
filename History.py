@@ -1,11 +1,18 @@
 class Historie:
     def __init__(self):
 
-        self.Handlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        self.Handlist = []
+        i = 0
+        while i <=20:
+            self.Handlist.append([None, None])
+            i = i + 1
 
-    def ad_Handposition(self, handposition):
 
-        self.Handlist[0:0] = [handposition]
+
+    def ad_Handposition(self, handposition, uhrzeit):
+
+        self.Handlist[0:0][0:0] = [handposition]
+        self.Handlist[0:1][0:0] = [uhrzeit]
         del self.Handlist[20]
         print(self.Handlist)
 

@@ -2,7 +2,6 @@ import cv2
 from PictureStorage import PictureStorage
 from Settings import Settings
 
-
 class ImageProcessing():
     def __init__(self, picture_storage : PictureStorage, settings : Settings):
         self.picture_storage = picture_storage

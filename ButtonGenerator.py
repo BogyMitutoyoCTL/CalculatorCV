@@ -16,29 +16,49 @@ class ButtonGenerator:
         x = self.x
         y = self.y
 
-        cv2.rectangle(self.picture, (x // 10, y // 10), (x // 10 * 4, y // 10 * 4), self.MitutoyoFarbe, 5)
-        cv2.putText(self.picture, "+", (x // 10 * 2, y // 10 * 3), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+        top_x = x // 11
+        top_y = x // 11
+        bottom_x = x // 10 * 4
+        bottom_y = y // 10 * 4
+        text = "+"
+
+        return top_x, top_y, bottom_x, bottom_y, text
 
     def subtrahieren(self):
 
         x = self.x
         y = self.y
 
-        cv2.rectangle(self.picture, (x // 10 * 6, y // 10), (x // 10 * 9, y // 10 * 4), self.MitutoyoFarbe, 5)
-        cv2.putText(self.picture, "-", (x // 10 * 7, y // 10 * 3), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+        top_x = x // 11 * 6
+        top_y = x // 11
+        bottom_x = x // 10 * 9
+        bottom_y = y // 10 * 4
+        text = "-"
+
+        return top_x, top_y, bottom_x, bottom_y, text
 
     def multiplizieren(self):
 
         x = self.x
         y = self.y
 
-        cv2.rectangle(self.picture, (x // 10, y // 10 * 6), (x // 10 * 4, y // 10 * 9), self.MitutoyoFarbe, 5)
-        cv2.putText(self.picture, "*", (x // 10 * 2, y // 10 * 8), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+        top_x = x // 11
+        top_y = x // 11 * 6
+        bottom_x = x // 10 * 4
+        bottom_y = y // 10 * 9
+        text = "*"
+
+        return top_x, top_y, bottom_x, bottom_y, text
 
     def dividieren(self,):
 
         x = self.x
         y = self.y
 
-        cv2.rectangle(self.picture, (x // 10 * 6, y // 10 * 6), ( x // 10 * 9, y // 10 * 9), self.MitutoyoFarbe, 5)
-        cv2.putText(self.picture, "/", (x // 10 * 7, y // 10 * 8), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 2)
+        top_x = x // 11 * 6
+        top_y = x // 11 * 6
+        bottom_x = x // 10 * 9
+        bottom_y = y // 10 * 9
+        text = "/"
+
+        return top_x, top_y, bottom_x, bottom_y, text
