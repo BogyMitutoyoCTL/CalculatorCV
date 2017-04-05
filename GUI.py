@@ -23,7 +23,7 @@ class GUI:
             self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
         if zahl2 is not None and rechenzeichen is not None:
-            ergebnis = self.rechner.rechne(zahl1, zahl2, rechenzeichen)
+            ergebnis = self.rechner.calculate(zahl1, zahl2, rechenzeichen)
             string = str(zahl1) + " " + rechenzeichen + " " + str(zahl2) + " " + "=" + "  " + str(ergebnis)
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
             self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)

@@ -1,12 +1,15 @@
 import cv2
 
-class Felder:
-    def __init__(self, filename):
-
-        self.picture = cv2.imread(filename)
+class ButtonGenerator:
+    def __init__(self, picture):
+        self.picture = picture
         self.x = len(self.picture[0])
         self.y = len(self.picture)
         self.MitutoyoFarbe = (54, 120, 244)
+
+    def generate(self):
+        # TODO: Liste mit 4 Buttons erzeugen und zurückgeben
+        pass
 
     def addieren(self):
 

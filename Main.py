@@ -4,8 +4,8 @@ from PictureStorage import PictureStorage
 import Settings
 from Window import Window
 import GUI
-import Rechner
-import Rectangle
+import Calculator
+import Button
 
 
 
@@ -15,9 +15,9 @@ settings = Settings.Settings()
 camera = Camera()
 tools = ImageProcessing.ImageProcessing(picture_storage, settings)
 window = Window(settings, tools, "Bilder")
-rechner = Rechner.Rechner()
+rechner = Calculator.Calculator()
 felder = GUI.GUI(rechner, picture_storage, settings)
-feld = Rectangle.Rectangle(40, 60, 40, 60, picture_storage)
+feld = Button.Button(40, 60, 40, 60, picture_storage)
 
 
 window.create_trackbars()
