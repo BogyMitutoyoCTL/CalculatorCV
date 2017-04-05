@@ -50,21 +50,15 @@ class Hand():
         # TODO: move to Hand class
 
     def kontur_mittelpunkt(self):
-        M = cv2.moments(self.datenbank.get_kontur(0))
-        if M["m00"] != 0:
-            center1 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+        for i in self.settings.contours:
+            M = cv2.moments(i)
+            if M["m00"] != 0:
+                center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
-        else:
-            center1 = (0, 0)
+            else:
+                center = (0, 0)
 
-        M = cv2.moments(self.datenbank.get_kontur(1))
-        if M["m00"] != 0:
-            center2 = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+            self.settings.set_center(center)
 
-        else:
-            center2 = (0, 0)
-
-        self.datenbank.set_center1(center1)
-        self.datenbank.set_center2(center2)
 
 
