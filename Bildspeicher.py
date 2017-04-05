@@ -23,12 +23,12 @@ class Bildspeicher():
     def get_bild_mit_felder(self, index):
         return self.bilder_mit_feldern[index]
 
-    def bild_anzeigen(self, felder_ja_nein, fenstername, index, window):
+    def bild_anzeigen(self, felder_ja_nein, index, window):
         if felder_ja_nein is True:
             bild = self.get_bild_mit_felder(index)
         else:
             bild = self.get_bild(index)
 
-        window.show_picture(fenstername, bild)
+        window.show_picture(bild)
 
 
