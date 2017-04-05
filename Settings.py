@@ -11,7 +11,6 @@ class Settings():
         self.minimum_recognition_size_px = 0
         # TODO: erweiterbar machen (Arthur)
         self.contours = [None, None]
-        # TODO: Klasse Hand, die ein Center hat
         self.center1 = None
         self.center2 = None
         self.radius = None
