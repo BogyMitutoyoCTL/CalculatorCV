@@ -7,9 +7,6 @@ import GUI
 import Calculator
 import Button
 
-
-
-
 picture_storage = PictureStorage()
 settings = Settings.Settings()
 camera = Camera()
@@ -39,7 +36,7 @@ while True:
     tools.color_glove()
     window.show_picture(picture_storage.get_picture(picture_storage.GLOVES_WITH_ORIGINAL_BGR))
     window.wait_key()
-    felder.paint_term(3, "/", 4)
+    felder.paint_term(3, "/", None, 1)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     window.wait_key()
     felder.kontur()
@@ -48,7 +45,7 @@ while True:
     felder.kontur_mittelpunkt()
     print(settings.get_center1(), settings.get_center2())
     felder.count_fingers()
-    felder.paint_term(settings.finger_count)
+    felder.paint_term(settings.finger_count, None, None)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     window.wait_key()
     settings.reset()
