@@ -1,7 +1,7 @@
 import cv2
 from PictureStorage import PictureStorage
 
-# TODO: merge with Felder.py
+# TODO: merge with Felder.py (Paul)
 class Button:
     def __init__(self, top_x: int, bottom_x:int, top_y : int, bottom_y:int, picture_storage: PictureStorage):
         self.top_left = (top_x, top_y)
