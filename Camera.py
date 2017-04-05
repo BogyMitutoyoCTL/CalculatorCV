@@ -12,7 +12,7 @@ if not systemIsWindows:
 LITTLE_COLOR = 10
 
 
-class Picture:
+class Camera:
 
     def __init__(self, bildspeicher):
         self.image = None

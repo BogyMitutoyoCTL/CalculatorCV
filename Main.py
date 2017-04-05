@@ -1,4 +1,4 @@
-import Taschenrechner_Bild
+from Camera import Camera
 import Bildbearbeitungstools
 import Bildspeicher
 import Datenbank
@@ -12,7 +12,7 @@ import Klasse_Feld
 
 bildspeicher = Bildspeicher.Bildspeicher()
 datenbank = Datenbank.Datenbank()
-camera = Taschenrechner_Bild.Picture(bildspeicher)
+camera = Camera(bildspeicher)
 tools = Bildbearbeitungstools.Bildbearbeitungstools(bildspeicher, datenbank)
 fenster = Taschenrechner_Fenster.Window(datenbank, tools, "Bilder")
 rechner = Rechner.Rechner()
