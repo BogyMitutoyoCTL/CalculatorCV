@@ -5,7 +5,7 @@ import Settings
 from Window import Window
 import GUI
 import Rechner
-import Klasse_Feld
+import Rectangle
 
 
 
@@ -17,7 +17,7 @@ tools = ImageProcessing.ImageProcessing(picture_storage, settings)
 window = Window(settings, tools, "Bilder")
 rechner = Rechner.Rechner()
 felder = GUI.GUI(rechner, picture_storage, settings)
-feld = Klasse_Feld.Feld(40, 60, 40, 60, picture_storage)
+feld = Rectangle.Rectangle(40, 60, 40, 60, picture_storage)
 
 
 window.create_trackbars()

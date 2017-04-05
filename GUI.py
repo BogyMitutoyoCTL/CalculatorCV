@@ -28,7 +28,7 @@ class GUI:
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
             self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
-    # TODO: move to Felder
+    # TODO: move to Rectangle
     def feld_erkennung(self, feldx1, feldx2, feldy1, feldy2, handx, handy):
         return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
 
