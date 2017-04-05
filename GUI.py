@@ -9,7 +9,7 @@ class GUI:
         self.picture_storage = picture_storage
         self.settings = settings
 
-    def paint_term(self, number1=None, operator=None, number2=None, delete=None):
+    def paint_term(self, number1, operator, number2, delete=None):
         image = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR).copy()
 
         if number1 is not None and operator is None and number2 is None and delete is not None:
