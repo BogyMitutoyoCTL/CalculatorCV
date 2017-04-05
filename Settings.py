@@ -11,7 +11,7 @@ class Settings():
         self.minimum_recognition_size_px = 0
         # TODO: erweiterbar machen (Arthur)
         self.contours = [None, None]
-        # TODO: Klasse Contour, die ein Center hat
+        # TODO: Klasse Hand, die ein Center hat
         self.center1 = None
         self.center2 = None
         self.radius = None
@@ -60,7 +60,7 @@ class Settings():
         self.contours = [0, 0]
 
     def set_radius(self):
-        # TODO: Contour um Radius erweitern
+        # TODO: Klasse Hand um Radius erweitern
         if self.radius is None:
             kontur1 = self.contours[0]
             kontur2 = self.contours[1]

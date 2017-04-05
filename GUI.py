@@ -4,12 +4,12 @@ from Settings import Settings
 
 class GUI:
 
-    def __init__(self, rechner, bildspeicher : PictureStorage, datenbank : Settings):
+    def __init__(self, rechner, picture_storage : PictureStorage, settings : Settings):
         self.rechner = rechner
-        self.bildspeicher = bildspeicher
-        self.datenbank = datenbank
+        self.bildspeicher = picture_storage
+        self.datenbank = settings
 
-    def rechenterm_anzeigen(self, index, zahl1, rechenzeichen=None, zahl2=None, reset=None):
+    def paint_term(self, index, zahl1, rechenzeichen=None, zahl2=None, reset=None):
         bild = self.bildspeicher.get_picture(index)
 
         if zahl2 is None and rechenzeichen is None:
@@ -28,9 +28,11 @@ class GUI:
             bild_mit_text = cv2.putText(bild, string, (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
             self.bildspeicher.add_picture_mit_felder(bild_mit_text, index)
 
+    # TODO: move to Felder
     def feld_erkennung(self, feldx1, feldx2, feldy1, feldy2, handx, handy):
         return feldx1 <= handx <= feldx2 and feldy1 <= handy <= feldy2
 
+    # TODO: move to ImageProcessing
     def kontur(self):
         ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
         ausgangsbild2 = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_WITH_ORIGINAL_BGR)
@@ -72,6 +74,7 @@ class GUI:
                 index = i
         return [index, index2]
 
+    # TODO: move to Hand class
     def kontur_mittelpunkt(self):
         M = cv2.moments(self.datenbank.get_kontur(0))
         if M["m00"] != 0:
@@ -98,11 +101,8 @@ class GUI:
         # kreis_bild = cv2.circle(self.bildspeicher.get_bild(self.bildspeicher.BGR2), center2, 50, (255, 255, 255))
         # self.bildspeicher.add_bild(kreis_bild, self.bildspeicher.MITTE)
 
-
-
-
-
-    def finger(self):
+    # TODO: move to Hand class
+    def count_fingers(self):
         mitte1 = self.datenbank.get_center1()
         mitte2 = self.datenbank.get_center2()
         ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
