@@ -2,7 +2,7 @@ import cv2
 from PictureStorage import PictureStorage
 from Settings import Settings
 
-class FeldActions:
+class GUI:
 
     def __init__(self, rechner, bildspeicher : PictureStorage, datenbank : Settings):
         self.rechner = rechner
