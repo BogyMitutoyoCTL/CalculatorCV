@@ -1,10 +1,10 @@
 import cv2
 from PictureStorage import PictureStorage
-from Datenbank import Datenbank
+from Settings import Settings
 
 class FeldActions:
 
-    def __init__(self, rechner, bildspeicher : PictureStorage, datenbank : Datenbank):
+    def __init__(self, rechner, bildspeicher : PictureStorage, datenbank : Settings):
         self.rechner = rechner
         self.bildspeicher = bildspeicher
         self.datenbank = datenbank
@@ -34,11 +34,11 @@ class FeldActions:
     def kontur(self):
         ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
         ausgangsbild2 = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_WITH_ORIGINAL_BGR)
-        minimalgröße = self.datenbank.size
+        minimalgröße = self.datenbank.minimum_recognition_size_px
         _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if konturen is not None:
             # print(konturen)
-            index = self.max_kontur(konturen, minimalgröße)
+            index = self.get_indexes_of_the_two_largest_contours(konturen, minimalgröße)
             if index[0] is not None:
                 bild_mit_konturen = cv2.drawContours(ausgangsbild2, [konturen[index[0]]], 0, (255, 255, 255), 2)
 
@@ -55,19 +55,21 @@ class FeldActions:
             else:
                 self.bildspeicher.add_picture(ausgangsbild2, self.bildspeicher.CONTOUR_OF_GLOVES_BGR)
 
-    def max_kontur(self, konturen, minimalgröße):
+    def get_indexes_of_the_two_largest_contours(self, konturen, minimal_size_in_pixel):
+        # TODO: areas merken (alle + index dazu) (Arthur)
+        # TODO: sortiere die Liste
+        # TODO: nimm die Top X
         max_area = 0
         index = None
         index2 = None
         for i in range(len(konturen)):
             area = cv2.contourArea(konturen[i])
+            if area < minimal_size_in_pixel:
+                continue
             if area >= max_area:
                 max_area = area
                 index2 = index
                 index = i
-        if index2 is not None:
-            if index2 < minimalgröße:
-                index2 = None
         return [index, index2]
 
     def kontur_mittelpunkt(self):
@@ -122,4 +124,4 @@ class FeldActions:
             anzahl += 1
         if mitte2 == (0, 0):
             anzahl += 1
-        self.datenbank.anzahl_finger = anzahl
+        self.datenbank.finger_count = anzahl

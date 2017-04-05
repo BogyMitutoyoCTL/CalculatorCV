@@ -1,6 +1,6 @@
 import cv2
 
-class Datenbank():
+class Settings():
     def __init__(self):
         self.upper_h = 69
         self.lower_h = 40
@@ -8,11 +8,14 @@ class Datenbank():
         self.lower_s = 108
         self.upper_v = 190
         self.lower_v = 32
-        self.size = 0
-        self.konturen = [0, 0]
+        self.minimum_recognition_size_px = 0
+        # TODO: erweiterbar machen (Arthur)
+        self.contours = [None, None]
+        # TODO: Klasse Contour, die ein Center hat
         self.center1 = None
+        self.center2 = None
         self.radius = None
-        self.anzahl_finger = 0
+        self.finger_count = 0
 
     def change_lower_h(self, wert):
         self.lower_h = wert
@@ -33,13 +36,13 @@ class Datenbank():
         self.upper_v = wert
 
     def change_size(self, wert):
-        self.size = wert
+        self.minimum_recognition_size_px = wert
 
     def set_konturen(self, konturen):
-        self.konturen = konturen
+        self.contours = konturen
 
     def get_kontur(self, index):
-        return self.konturen[index]
+        return self.contours[index]
 
     def set_center1(self, center1):
         self.center1 = center1
@@ -54,12 +57,13 @@ class Datenbank():
         return self.center2
 
     def reset(self):
-        self.konturen = [0, 0]
+        self.contours = [0, 0]
 
     def set_radius(self):
+        # TODO: Contour um Radius erweitern
         if self.radius is None:
-            kontur1 = self.konturen[0]
-            kontur2 = self.konturen[1]
+            kontur1 = self.contours[0]
+            kontur2 = self.contours[1]
             if kontur1 is not None:
                 (_, _), radius1 = cv2.minEnclosingCircle(kontur1)
                 radius1 = int(radius1)

@@ -1,7 +1,7 @@
 from Camera import Camera
 import Bildbearbeitungstools
 from PictureStorage import PictureStorage
-import Datenbank
+import Settings
 from Window import Window
 import Taschenrechner_Felder
 import Rechner
@@ -11,7 +11,7 @@ import Klasse_Feld
 
 
 picture_storage = PictureStorage()
-datenbank = Datenbank.Datenbank()
+datenbank = Settings.Settings()
 camera = Camera()
 tools = Bildbearbeitungstools.Bildbearbeitungstools(picture_storage, datenbank)
 window = Window(datenbank, tools, "Bilder")
@@ -46,7 +46,7 @@ while True:
     felder.kontur_mittelpunkt()
     print(datenbank.get_center1(), datenbank.get_center2())
     felder.finger()
-    felder.rechenterm_anzeigen(picture_storage.CIRCLES_ON_GLOVES_BW, datenbank.anzahl_finger)
+    felder.rechenterm_anzeigen(picture_storage.CIRCLES_ON_GLOVES_BW, datenbank.finger_count)
     picture_storage.show_picture(True, picture_storage.CIRCLES_ON_GLOVES_BW, window)
     window.wait_key()
     datenbank.reset()

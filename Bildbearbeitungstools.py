@@ -1,9 +1,9 @@
 import cv2
 from PictureStorage import PictureStorage
-from Datenbank import Datenbank
+from Settings import Settings
 
 class Bildbearbeitungstools():
-    def __init__(self, picture_storage : PictureStorage, datenbank : Datenbank):
+    def __init__(self, picture_storage : PictureStorage, datenbank : Settings):
         self.picture_storage = picture_storage
         self.datenbank = datenbank
 
