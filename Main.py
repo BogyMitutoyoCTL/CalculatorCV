@@ -26,25 +26,35 @@ while True:
     picture_storage.add_picture(camera_picture, picture_storage.ORIGINAL_FROM_CAMERA_BGR)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_FROM_CAMERA_BGR))
     window.wait_key()
+
     camera_converted_to_hsv = tools.convert_to_hsv(camera_picture)
     picture_storage.add_picture(camera_converted_to_hsv, picture_storage.CAMERA_CONVERTED_HSV)
     window.show_picture(picture_storage.get_picture(picture_storage.CAMERA_CONVERTED_HSV))
     window.wait_key()
-    tools.glove_filter()
+
+    camera_glove_bw = tools.glove_filter(camera_converted_to_hsv)
+    picture_storage.add_picture(camera_glove_bw, picture_storage.GLOVES_BW)
     window.show_picture(picture_storage.get_picture(picture_storage.GLOVES_BW))
     window.wait_key()
-    tools.blur(10)
+
+    camera_blurred_bw = tools.blur(10, camera_glove_bw)
+    picture_storage.add_picture(camera_blurred_bw, picture_storage.GLOVES_BLURRED_BW)
     window.show_picture(picture_storage.get_picture(picture_storage.GLOVES_BLURRED_BW))
     window.wait_key()
-    tools.color_glove()
+
+    camera_glove_bgr = tools.color_glove(camera_picture, camera_blurred_bw)
+    picture_storage.add_picture(camera_glove_bgr, picture_storage.GLOVES_WITH_ORIGINAL_BGR)
     window.show_picture(picture_storage.get_picture(picture_storage.GLOVES_WITH_ORIGINAL_BGR))
     window.wait_key()
+
     felder.paint_term(3, "/", 4)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     window.wait_key()
+
     felder.kontur()
     window.show_picture(picture_storage.get_picture(picture_storage.CONTOUR_OF_GLOVES_BGR))
     window.wait_key()
+
     felder.kontur_mittelpunkt()
     print(settings.get_center1(), settings.get_center2())
     felder.count_fingers()

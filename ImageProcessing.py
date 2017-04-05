@@ -13,23 +13,25 @@ class ImageProcessing():
 
     def convert_to_hsv(self, bgr_image):
         hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)
+
         return hsv_image
 
-    def glove_filter(self):
-        # TODO: ähnlich umbauen wie convert_to_hsv() (Paul)
+    def glove_filter(self, hsv_image):
         lowerhsv = (self.settings.lower_h, self.settings.lower_s, self.settings.lower_v)
         upperhsv = (self.settings.upper_h, self.settings.upper_s, self.settings.upper_v)
-        hsv_image = self.picture_storage.get_picture(self.picture_storage.CAMERA_CONVERTED_HSV)
-        self.picture_storage.add_picture(cv2.inRange(hsv_image, lowerhsv, upperhsv), self.picture_storage.GLOVES_BW)
+        gloves_bw_image = cv2.inRange(hsv_image, lowerhsv, upperhsv)
 
-    def blur(self, blur_size):
-        blurred = cv2.blur(self.picture_storage.get_picture(self.picture_storage.GLOVES_BW), (blur_size, blur_size))
-        blurred_bw = cv2.inRange(blurred, (self.INCLUSIVE_GRAY), (self.WHITE))
-        self.picture_storage.add_picture(blurred_bw, self.picture_storage.GLOVES_BLURRED_BW)
+        return gloves_bw_image
 
-    def color_glove(self):
-        mask = cv2.bitwise_not(self.picture_storage.get_picture(self.picture_storage.GLOVES_BLURRED_BW))
-        source = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
-        glove_combined = cv2.bitwise_and(source, self.ALL_CHANNELS, source, mask)
-        self.picture_storage.add_picture(glove_combined, self. picture_storage.GLOVES_WITH_ORIGINAL_BGR)
+    def blur(self, blur_size, gloves_bw_image):
+        blurred = cv2.blur(gloves_bw_image, (blur_size, blur_size))
+        blurred_bw_image = cv2.inRange(blurred, (self.INCLUSIVE_GRAY), (self.WHITE))
+
+        return blurred_bw_image
+
+    def color_glove(self, bgr_image, blurred_bw_image):
+        mask = cv2.bitwise_not(blurred_bw_image)
+        color_glove_image = cv2.bitwise_and(bgr_image, self.ALL_CHANNELS, bgr_image, mask)
+
+        return color_glove_image
 
