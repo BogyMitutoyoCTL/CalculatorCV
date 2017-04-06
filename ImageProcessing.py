@@ -65,20 +65,13 @@ class ImageProcessing():
                 continue
             else:
                 areas.append(area)
-                # TODO: get contours directly
+                # TODO: get contours directly (optional, looks nicer in code)
                 index.append(i)
 
-        index, areas = self.sort_areas(index, areas)
         index, areas = self.shrink_list_to_count(count, index, areas)
         return index, areas
 
-    # TODO: sort_areas
-
-    def sort_areas(self, index, areas):
-
-        return index, areas
-
-    # TODO: shrink_list_to_count(count, index, areas)
+    # TODO: shrink_list_to_count(count, index, areas)(if you want to have only a special number of hands)
 
     def shrink_list_to_count(self, count, index, areas):
 
