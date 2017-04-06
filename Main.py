@@ -97,9 +97,10 @@ class Main:
                 text = str(hand.count_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD),
                                                 hand.center, text)
-                self.window.show_picture(pic)
+                self.picture_storage.add_picture(pic, self.picture_storage.ORIGINAL_WITH_FELD)
+
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
-            hands_picture_bgr = self.tools.draw_hands(hands, field_picture)
+            hands_picture_bgr = self.tools.draw_hands(hands, pic)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
             self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.ORIGINAL_WITH_FELD)
             self.window.show_picture(hands_picture_bw)
@@ -123,7 +124,4 @@ if __name__ == "__main__":
     main_thread.start()
     main_thread.join()
     key_thread.join()
-
-
-    # TODO: Key ändern
 

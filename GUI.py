@@ -15,16 +15,16 @@ class GUI:
 
         if number2 is None and operator is None:
             string = str(number1)
-            image_with_text = cv2.putText(image, string, (230, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3)
+            image_with_text = cv2.putText(image, string, (270, 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
             self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
 
         if number2 is None and operator is not None:
             string = str(number1) + " " + operator
-            image_with_text = cv2.putText(image, string, (230, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3)
+            image_with_text = cv2.putText(image, string, (270, 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
             self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
 
         if number2 is not None and operator is not None:
             result = self.calculator.calculate(number1, number2, operator)
             string = str(number1) + " " + operator + " " + str(number2) + " " + "=" + " " + str(result)
-            image_with_text = cv2.putText(image, string, (230, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3)
+            image_with_text = cv2.putText(image, string, (270, 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
             self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)

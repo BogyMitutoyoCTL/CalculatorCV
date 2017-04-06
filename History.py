@@ -46,13 +46,13 @@ class History:
 
     def confirmed_operator(self, button_generator: ButtonGenerator):
         operator = None
-        if self.is_hand_center_in_addition(button_generator.draw_all_buttons()[0]) is True:
+        if self.is_hand_center_in_addition(button_generator.generate_all_buttons()[0]) is True:
             operator = "+"
-        if self.is_hand_center_in_subtraction(button_generator.draw_all_buttons()[1]) is True:
+        if self.is_hand_center_in_subtraction(button_generator.generate_all_buttons()[1]) is True:
             operator = "-"
-        if self.is_hand_center_in_multiply(button_generator.draw_all_buttons()[2]) is True:
+        if self.is_hand_center_in_multiply(button_generator.generate_all_buttons()[2]) is True:
             operator = "*"
-        if self. is_hand_center_in_divide(button_generator.draw_all_buttons()[4]) is True:
+        if self. is_hand_center_in_divide(button_generator.generate_all_buttons()[4]) is True:
             operator = "/"
         return operator
 
@@ -61,7 +61,7 @@ class History:
         time_now = self.get_time(0)
         time_old = time_now
         i = 0
-        while i < len(self.Handlist) and addition.field_recognizion(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+        while i < len(self.Handlist) and addition.field_recognition(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
             time_now = self.get_time(i)
             i += 1
         time_difference = time_now - time_old
