@@ -3,9 +3,8 @@ import Settings
 
 class Window:
 
-    def __init__(self, datenbank, bildbearbeitungstools, window_name):
-        self.datenbank = datenbank
-        self.bildbearbeitung = bildbearbeitungstools
+    def __init__(self, settings: Settings, window_name):
+        self.settings = settings
         self.window_name = window_name
         cv2.namedWindow(window_name)
         self.image_width_px = 1080
@@ -28,29 +27,23 @@ class Window:
         cv2.createTrackbar("minimum_recognition_size", self.window_name, 10, 100, self.size_changed)
 
     def lower_h_changed(self, hue):
-        self.datenbank.change_lower_h(hue)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_lower_h(hue)
 
     def upper_h_changed(self, hue):
-        self.datenbank.change_upper_h(hue)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_upper_h(hue)
 
     def lower_s_changed(self, saturation):
-        self.datenbank.change_lower_s(saturation)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_lower_s(saturation)
 
     def upper_s_changed(self, saturation):
-        self.datenbank.change_upper_s(saturation)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_upper_s(saturation)
 
     def lower_v_changed(self, value):
-        self.datenbank.change_lower_v(value)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_lower_v(value)
 
     def upper_v_changed(self, value):
-        self.datenbank.change_upper_v(value)
-        self.bildbearbeitung.glove_filter()
+        self.settings.change_upper_v(value)
 
     def size_changed(self, minimum_recognition_size_percent):
         size_in_px = self.image_width_px * minimum_recognition_size_percent / 100
-        self.datenbank.change_size(int(size_in_px))
+        self.settings.change_recognition_size(int(size_in_px))
