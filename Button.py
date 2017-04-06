@@ -33,17 +33,17 @@ class Button:
 
         return picture
 
-    def get_top_x(self):
+    def get_top_x(self) -> int:
         return self.top_left[0]
 
-    def get_top_y(self):
+    def get_top_y(self) -> int:
         return self.top_left[1]
 
-    def get_bottom_x(self):
+    def get_bottom_x(self) -> int:
         return self.bottom_right[0]
 
-    def get_bottom_y(self):
+    def get_bottom_y(self) -> int:
         return self.bottom_right[1]
 
-    def field_recognition(self, hand_x, hand_y):
-        return self.top_x <= hand_x <= self.bottom_x and self.top_y <= hand_y <= self.bottom_y
+    def contains_point(self, x, y) -> bool:
+        return self.top_x <= x <= self.bottom_x and self.top_y <= y <= self.bottom_y

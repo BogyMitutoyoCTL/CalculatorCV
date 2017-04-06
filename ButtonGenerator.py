@@ -1,5 +1,6 @@
 from PictureStorage import PictureStorage
 from Button import Button
+from typing import *
 
 
 class ButtonGenerator:
@@ -13,7 +14,7 @@ class ButtonGenerator:
         self.text_scale = 3
         self.text_scale_del = 1
 
-    def addieren(self):
+    def addieren(self) -> Button:
         top_x = self.from_left(1)
         top_y = self.from_top(1)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -22,7 +23,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale)
 
-    def subtrahieren(self):
+    def subtrahieren(self) -> Button:
         top_x = self.from_right()
         top_y = self.from_top(1)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -31,7 +32,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale)
 
-    def multiplizieren(self):
+    def multiplizieren(self) -> Button:
         top_x = self.from_left(1)
         top_y = self.from_bottom()
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -40,8 +41,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale)
 
-    def delete(self):
-
+    def delete(self) -> Button:
         top_x = self.from_left(5)
         top_y = self.from_bottom()
         bottom_x = self.calculate_bottom(top_x, self.width, 5)
@@ -51,7 +51,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def division(self):
+    def division(self) -> Button:
         top_x = self.from_right()
         top_y = self.from_bottom()
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -60,46 +60,46 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def calculation_field(self):
+    def calculation_field(self) -> Button:
         top_x = self.from_left(5)
         top_y = self.from_top(1)
         bottom_x = self.calculate_bottom(top_x, self.width, 5)
         bottom_y = self.calculate_bottom(top_y, self.hight, self.default_button_size)
-        text = None
+        text = ""
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def choosing_field(self):
-        top_x = self. from_left(4)
+    def choosing_field(self) -> Button:
+        top_x = self.from_left(4)
         top_y = self.from_top(4)
         bottom_x = self.calculate_bottom(top_x, self.width, 7)
         bottom_y = self.calculate_bottom(top_y, self.hight, 7)
 
-        text = None
+        text = ""
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def generate_all_buttons(self):
-        return [self.addieren(), self.subtrahieren(), self.multiplizieren(), self.delete(), self.division(), self.choosing_field(), self.calculation_field()]
+    def generate_all_buttons(self) -> List[Button]:
+        return [self.addieren(), self.subtrahieren(), self.multiplizieren(), self.delete(), self.division(),
+                self.choosing_field(), self.calculation_field()]
 
-    def from_top_left(self, x, count):
+    def from_top_left(self, x, count) -> int:
         return x // self.section_count * self.margin * count
 
-    def from_top(self, count):
+    def from_top(self, count) -> int:
         return self.from_top_left(self.hight, count)
 
-    def from_left(self, count):
+    def from_left(self, count) -> int:
         return self.from_top_left(self.width, count)
 
-    def from_bottom_right(self, x):
+    def from_bottom_right(self, x) -> int:
         return x // self.section_count * (self.section_count - self.default_button_size - self.margin)
 
-    def from_bottom(self):
+    def from_bottom(self) -> int:
         return self.from_bottom_right(self.hight)
 
-    def from_right(self):
+    def from_right(self) -> int:
         return self.from_bottom_right(self.width)
-
 
     def calculate_bottom(self, top_x, x, button_width):
         return top_x + button_width * x // self.section_count
