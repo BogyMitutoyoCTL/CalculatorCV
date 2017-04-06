@@ -1,29 +1,32 @@
 import keyboard
+import multiprocessing
 
 
 class KeyListener:
     def __init__(self):
         self.setter = None
 
-    def action(self, key):
-        if key == '9':
+    def on_keypress(self, key: str) -> None:
+        if key == 'esc':
             key = -1
         key = int(key)
         self.setter.put(key)
 
     def listen(self):
-        keyboard.add_hotkey('0', self.action, '0')
-        keyboard.add_hotkey('1', self.action, '1')
-        keyboard.add_hotkey('2', self.action, '2')
-        keyboard.add_hotkey('3', self.action, '3')
-        keyboard.add_hotkey('4', self.action, '4')
-        # keyboard.add_hotkey('5', self.action, '5')
-        keyboard.add_hotkey('6', self.action, '6')
-        keyboard.add_hotkey('7', self.action, '7')
-        keyboard.add_hotkey('esc', self.action, '9')
+        self.create_hotkey('0')
+        self.create_hotkey('1')
+        self.create_hotkey('2')
+        self.create_hotkey('3')
+        self.create_hotkey('4')
+        self.create_hotkey('6')
+        self.create_hotkey('7')
+        self.create_hotkey('esc')
         keyboard.wait('esc')
 
-    def start(self, q):
-        self.setter = q
+    def create_hotkey(self, key: str) -> None:
+        keyboard.add_hotkey(key, self.on_keypress, key)
+
+    def start(self, queue: multiprocessing.Queue) -> None:
+        self.setter = queue
         self.listen()
 
