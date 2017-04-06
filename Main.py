@@ -60,7 +60,7 @@ while True:
 
     felder.paint_term(3, "/", 4)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
-    #window.wait_key()
+    window.wait_key()
     hands = tools.get_hands(camera_blurred_bw, settings.minimum_recognition_size_px, 2)
     for hand in hands:
         print(hand.center)
