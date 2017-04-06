@@ -3,7 +3,7 @@ from PictureStorage import PictureStorage
 
 
 class Button:
-    def __init__(self, top_x: int, top_y: int, bottom_x: int, bottom_y: int, text: str):
+    def __init__(self, top_x: int, top_y: int, bottom_x: int, bottom_y: int, text: str, scale):
         self.top_left = (top_x, top_y)
         self.bottom_right = (bottom_x, bottom_y)
         self.color = (54, 120, 244)
@@ -13,6 +13,7 @@ class Button:
         self.top_y = top_y
         self.bottom_x = bottom_x
         self.bottom_y = bottom_y
+        self.scale = scale
 
 
     def draw_field(self, picture):
@@ -22,7 +23,14 @@ class Button:
         x = (self.top_x + self.bottom_x) // 2
         y = (self.top_y + self.bottom_y) // 2
 
-        picture = cv2.putText(picture, self.text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+        text_size = cv2.getTextSize(self.text, cv2.FONT_HERSHEY_SIMPLEX, self.scale, 2)
+        width = text_size[0][0]
+        hight = text_size[0][1]
+
+        x = x - width // 2
+        y = y + hight // 2
+
+        picture = cv2.putText(picture, self.text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, self.scale, self.color, 2)
 
         return picture
 
