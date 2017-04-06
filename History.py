@@ -4,11 +4,10 @@ import datetime
 class History:
     def __init__(self):
         self.Handlist = []
-        self.time = None
 
     def add_information(self, center_of_hand, number_of_fingers, operator):
-        self.time = datetime.datetime.now()
-        self.Handlist.insert(0, [center_of_hand, self.time, number_of_fingers, operator])
+        time = datetime.datetime.now()
+        self.Handlist.insert(0, [center_of_hand, time, number_of_fingers, operator])
 
     def get_center_of_hand(self, index):
         return self.Handlist[index][0]
