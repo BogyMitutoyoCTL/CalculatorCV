@@ -17,7 +17,7 @@ class KeyListener:
         keyboard.add_hotkey('2', self.action, '2')
         keyboard.add_hotkey('3', self.action, '3')
         keyboard.add_hotkey('4', self.action, '4')
-        keyboard.add_hotkey('5', self.action, '5')
+        # keyboard.add_hotkey('5', self.action, '5')
         keyboard.add_hotkey('6', self.action, '6')
         keyboard.add_hotkey('7', self.action, '7')
         keyboard.add_hotkey('esc', self.action, '9')

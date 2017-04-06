@@ -10,6 +10,7 @@ from ButtonGenerator import ButtonGenerator
 import cv2
 import multiprocessing
 import KeyListener
+from History import History
 
 class Main:
 
@@ -24,6 +25,7 @@ class Main:
         self.gui = None
         self.key = None
         self.getter = None
+        self.history = None
 
     def start(self, getter):
         self.getter = getter
@@ -31,11 +33,12 @@ class Main:
         self.settings = Settings.Settings()
         self.camera = Camera()
         self.tools = ImageProcessing.ImageProcessing(self.picture_storage, self.settings)
-        self.window = Window(self.settings, self.tools, "Bilder")
-        self.main_window = Window(self.settings, self.tools, "Taschenrechner")
+        self.window = Window(self.settings, "Bilder")
+        self.main_window = Window(self.settings, "Taschenrechner")
         self.calculator = Calculator.Calculator()
         self.gui = GUI.GUI(self.calculator, self.picture_storage, self.settings)
         self.key = self.getter.get()
+        self.history = History()
         self._run()
 
     def _run(self):
@@ -45,11 +48,11 @@ class Main:
                 self.key = self.getter.get()
 
             camera_picture = self.tools.flip(self.camera.get_picture())
-            self.picture_storage.add_picture(camera_picture, self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
+            self.picture_storage.add_picture(camera_picture.copy(), self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR))
 
             TestFenster = ButtonGenerator(self.picture_storage)
-            fields = TestFenster.draw_all_buttons()
+            fields = TestFenster.generate_all_buttons()
             field_picture = camera_picture
             for field in fields:
                 field_picture = field.draw_field(field_picture)
@@ -90,6 +93,11 @@ class Main:
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
+                self.history.add_information(hand.center, hand.count_fingers, None)
+                text = str(hand.count_fingers)
+                pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD),
+                                                hand.center, text)
+                self.window.show_picture(pic)
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
             hands_picture_bgr = self.tools.draw_hands(hands, field_picture)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
