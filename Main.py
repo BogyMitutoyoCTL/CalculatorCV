@@ -5,69 +5,123 @@ import Settings
 from Window import Window
 import GUI
 import Calculator
-from History import History
+from Button import Button
 from ButtonGenerator import ButtonGenerator
 import cv2
+import multiprocessing
+import KeyListener
+from History import History
 
+class Main:
 
-picture_storage = PictureStorage()
-settings = Settings.Settings()
-camera = Camera()
-tools = ImageProcessing.ImageProcessing(picture_storage, settings)
-window = Window(settings, "Bilder")
-main_window = Window(settings, "Taschenrechner")
-calculator = Calculator.Calculator()
-gui = GUI.GUI(calculator, picture_storage, settings)
-key = 6
-history = History()
+    def __init__(self):
+        self.picture_storage = None
+        self.settings = None
+        self.camera = None
+        self.tools = None
+        self.window = None
+        self.main_window = None
+        self.calculator = None
+        self.gui = None
+        self.key = None
+        self.getter = None
+        self.history = None
 
-window.create_trackbars()
-while True:
-    camera_picture = tools.flip(camera.get_picture())
-    picture_storage.add_picture(camera_picture, picture_storage.ORIGINAL_FROM_CAMERA_BGR)
+    def start(self, getter):
+        self.getter = getter
+        self.picture_storage = PictureStorage()
+        self.settings = Settings.Settings()
+        self.camera = Camera()
+        self.tools = ImageProcessing.ImageProcessing(self.picture_storage, self.settings)
+        self.window = Window(self.settings, "Bilder")
+        self.main_window = Window(self.settings, "Taschenrechner")
+        self.calculator = Calculator.Calculator()
+        self.gui = GUI.GUI(self.calculator, self.picture_storage, self.settings)
+        self.key = self.getter.get()
+        self.history = History()
+        self._run()
 
-    TestFenster = ButtonGenerator(picture_storage)
-    fields = TestFenster.generate_all_buttons()
-    field_picture = camera_picture
-    for field in fields:
-        field_picture = field.draw_field(field_picture)
-    picture_storage.add_picture(field_picture, picture_storage.ORIGINAL_WITH_FELD)
+    def _run(self):
+        self.window.create_trackbars()
+        while self.key != -1:
+            if not self.getter.empty():
+                self.key = self.getter.get()
 
-    camera_converted_to_hsv = tools.convert_to_hsv(camera_picture)
-    picture_storage.add_picture(camera_converted_to_hsv, picture_storage.CAMERA_CONVERTED_HSV)
+            camera_picture = self.tools.flip(self.camera.get_picture())
+            self.picture_storage.add_picture(camera_picture.copy(), self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR))
 
-    camera_glove_bw = tools.glove_filter(camera_converted_to_hsv)
-    picture_storage.add_picture(camera_glove_bw, picture_storage.GLOVES_BW)
+            TestFenster = ButtonGenerator(self.picture_storage)
+            fields = TestFenster.generate_all_buttons()
+            field_picture = camera_picture
+            for field in fields:
+                field_picture = field.draw_field(field_picture)
+                self.picture_storage.add_picture(field_picture, self.picture_storage.ORIGINAL_WITH_FELD)
+                self.window.show_picture(field_picture)
 
-    camera_blurred_bw = tools.blur(10, camera_glove_bw)
-    picture_storage.add_picture(camera_blurred_bw, picture_storage.GLOVES_BLURRED_BW)
+            # window.wait_key()
 
-    camera_glove_bgr = tools.color_glove(camera_picture, camera_blurred_bw)
-    picture_storage.add_picture(camera_glove_bgr, picture_storage.GLOVES_WITH_ORIGINAL_BGR)
+            camera_converted_to_hsv = self.tools.convert_to_hsv(camera_picture)
+            self.picture_storage.add_picture(camera_converted_to_hsv, self.picture_storage.CAMERA_CONVERTED_HSV)
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.CAMERA_CONVERTED_HSV))
+            # window.wait_key()
 
-    gui.paint_term(3, "/", 4)
+            camera_glove_bw = self.tools.glove_filter(camera_converted_to_hsv)
+            self.picture_storage.add_picture(camera_glove_bw, self.picture_storage.GLOVES_BW)
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_BW))
+            # window.wait_key()
 
-    hands = tools.get_hands(camera_blurred_bw, settings.minimum_recognition_size_px, 2)
-    for hand in hands:
-        print(hand.center)
-        hand.get_center()
-        print(hand.center)
-        hand_picture = hand.fingers(camera_blurred_bw)
-        window.show_picture(hand_picture)
-        history.add_information(hand.center, hand.count_fingers, None)
-        text = str(hand.count_fingers)
-        pic = tools.text_in_center_hand(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD), hand.center, text)
-        window.show_picture(pic)
+            camera_blurred_bw = self.tools.blur(10, camera_glove_bw)
+            self.picture_storage.add_picture(camera_blurred_bw, self.picture_storage.GLOVES_BLURRED_BW)
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_BLURRED_BW))
+            # window.wait_key()
 
-        window.wait_key(10)
-    hands_picture_bw = tools.draw_hands(hands, camera_blurred_bw)
-    hands_picture_bgr = tools.draw_hands(hands, field_picture)
-    picture_storage.add_picture(hands_picture_bw, picture_storage.HANDS_BW)
-    picture_storage.add_picture(hands_picture_bgr, picture_storage.ORIGINAL_WITH_FELD)
+            camera_glove_bgr = self.tools.color_glove(camera_picture, camera_blurred_bw)
+            self.picture_storage.add_picture(camera_glove_bgr, self.picture_storage.GLOVES_WITH_ORIGINAL_BGR)
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
+            # window.wait_key()
 
-    main_window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
-    window.wait_key(10)
+            self.gui.paint_term(3, "/", 4)
 
-    # TODO: Key ändern
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            # window.wait_key()
+            hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
+            for hand in hands:
+                print(hand.center)
+                hand.get_center()
+                print(hand.center)
+                hand_picture = hand.fingers(camera_blurred_bw)
+                self.window.show_picture(hand_picture)
+                # window.wait_key()
+                self.history.add_information(hand.center, hand.count_fingers, None)
+                text = str(hand.count_fingers)
+                pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD),
+                                                hand.center, text)
+                self.picture_storage.add_picture(pic, self.picture_storage.ORIGINAL_WITH_FELD)
 
+            hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
+            hands_picture_bgr = self.tools.draw_hands(hands, pic)
+            self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
+            self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.ORIGINAL_WITH_FELD)
+            self.window.show_picture(hands_picture_bw)
+            # window.wait_key()
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            # window.wait_key()
+
+            self.window.show_picture(self.picture_storage.get_picture(self.key))
+            self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            self.window.wait_key(10)
+
+if __name__ == "__main__":
+    queue = multiprocessing.Queue()
+    queue.put(6)
+    key_listener = KeyListener.KeyListener()
+    main_object = Main()
+    main_thread = multiprocessing.Process(target=main_object.start, args=(queue,))
+
+    key_thread = multiprocessing.Process(target=key_listener.start, args=(queue,))
+    key_thread.start()
+    main_thread.start()
+    main_thread.join()
+    key_thread.join()
 
