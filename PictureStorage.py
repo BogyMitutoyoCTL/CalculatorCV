@@ -12,8 +12,8 @@ class PictureStorage:
         self.HANDS_BW = 6
         self.ORIGINAL_WITH_FELD = 7
 
-    def add_picture(self, bild, index):
-        self.pictures[index] = bild
+    def add_picture(self, picture, index: int) -> None:
+        self.pictures[index] = picture
 
-    def get_picture(self, index):
+    def get_picture(self, index: int):
         return self.pictures[index]
