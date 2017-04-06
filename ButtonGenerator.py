@@ -15,7 +15,7 @@ class ButtonGenerator:
 
     def addieren(self):
         top_x = self.from_left(1)
-        top_y = self.from_top()
+        top_y = self.from_top(1)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
         bottom_y = self.calculate_bottom(top_y, self.hight, self.default_button_size)
         text = "+"
@@ -24,7 +24,7 @@ class ButtonGenerator:
 
     def subtrahieren(self):
         top_x = self.from_right()
-        top_y = self.from_top()
+        top_y = self.from_top(1)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
         bottom_y = self.calculate_bottom(top_y, self.hight, self.default_button_size)
         text = "-"
@@ -60,14 +60,33 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def draw_all_buttons(self):
-        return [self.addieren(), self.subtrahieren(), self.multiplizieren(), self.delete(), self.division()]
+    def calculation_field(self):
+        top_x = self.from_left(5)
+        top_y = self.from_top(1)
+        bottom_x = self.calculate_bottom(top_x, self.width, 5)
+        bottom_y = self.calculate_bottom(top_y, self.hight, self.default_button_size)
+        text = None
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
+    def choosing_field(self):
+        top_x = self. from_left(4)
+        top_y = self.from_top(4)
+        bottom_x = self.calculate_bottom(top_x, self.width, 7)
+        bottom_y = self.calculate_bottom(top_y, self.hight, 7)
+
+        text = None
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
+    def generate_all_buttons(self):
+        return [self.addieren(), self.subtrahieren(), self.multiplizieren(), self.delete(), self.division(), self.choosing_field(), self.calculation_field()]
 
     def from_top_left(self, x, count):
         return x // self.section_count * self.margin * count
 
-    def from_top(self):
-        return self.from_top_left(self.hight, 1)
+    def from_top(self, count):
+        return self.from_top_left(self.hight, count)
 
     def from_left(self, count):
         return self.from_top_left(self.width, count)
@@ -80,7 +99,6 @@ class ButtonGenerator:
 
     def from_right(self):
         return self.from_bottom_right(self.width)
-
 
     def calculate_bottom(self, top_x, x, button_width):
         return top_x + button_width * x // self.section_count
