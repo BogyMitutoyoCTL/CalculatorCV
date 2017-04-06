@@ -81,7 +81,7 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
             # window.wait_key()
 
-            self.gui.paint_term(3, "/", 4)
+            self.gui.paint_term(3, "+", 5)
 
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             # window.wait_key()
@@ -100,8 +100,8 @@ class Main:
                 self.picture_storage.add_picture(pic, self.picture_storage.ORIGINAL_WITH_FELD)
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
-            hands_picture_bgr = self.tools.draw_hands(hands, pic)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
+            hands_picture_bgr = self.tools.draw_hands(hands, self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.ORIGINAL_WITH_FELD)
             self.window.show_picture(hands_picture_bw)
             # window.wait_key()
