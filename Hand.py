@@ -1,7 +1,9 @@
 import cv2
+import numpy
 
-class Hand():
-    def __init__(self, count_fingers = None, center = None, big_radius = None, small_radius = None, contour = None, area = None):
+
+class Hand:
+    def __init__(self, count_fingers=None, center=None, big_radius=None, small_radius=None, contour=None, area=None):
         self.count_fingers = count_fingers
         self.center = center
         self.big_radius = big_radius
@@ -9,28 +11,25 @@ class Hand():
         self.contour = contour
         self.area = area
 
-
-
-
-
-    def count_fingers(self):
-        ausgangsbild = self.bildspeicher.get_picture(self.bildspeicher.GLOVES_BLURRED_BW)
+    def fingers(self, picture_blurred_bw):
         self.set_radius()
         radius = self.get_small_radius()
-
-
+        picture_with_circles = picture_blurred_bw.copy()
         if radius is not None:
-            bild1 = cv2.circle(ausgangsbild, self.center, radius, (0, 0, 0), -1)
-        else:
-            bild1 = ausgangsbild
+            size = picture_blurred_bw.shape
+            black_image = numpy.zeros((size[0], size[1], 1), numpy.uint8)
+            cv2.circle(black_image, self.center, self.big_radius, (255, 255, 255), -1)
+            cv2.bitwise_not(black_image, black_image)
+            cv2.bitwise_and(picture_with_circles, 0, picture_with_circles, black_image)
+            cv2.circle(picture_with_circles, self.center, radius, (0, 0, 0), -1)
 
-        self.bildspeicher.add_picture(bild1, self.bildspeicher.CIRCLES_ON_GLOVES_BW)
+        _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        count = len(contours) - 1
+        # if self.center == (0, 0):
+        #     count += 1
+        self.count_fingers = count
 
-        _, konturen, _ = cv2.findContours(ausgangsbild, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        anzahl = len(konturen) - 1
-        if self.center == (0, 0):
-            anzahl += 1
-        self.datenbank.finger_count = anzahl
+        return picture_with_circles
 
     def set_radius(self):
         if self.big_radius is None:
@@ -39,7 +38,7 @@ class Hand():
                 self.big_radius = int(radius1)
             else:
                 self.big_radius = 0
-            self.small_radius = int(self.big_radius)
+            self.small_radius = int(0.75 * self.big_radius)
 
     def get_big_radius(self, ):
         return self.big_radius
@@ -47,9 +46,7 @@ class Hand():
     def get_small_radius(self, ):
         return self.small_radius
 
-        # TODO: move to Hand class
-
-    def kontur_mittelpunkt(self):
+    def get_center(self):
         M = cv2.moments(self.contour)
         if M["m00"] != 0:
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
@@ -58,3 +55,5 @@ class Hand():
             center = (0, 0)
 
         self.center = center
+
+
