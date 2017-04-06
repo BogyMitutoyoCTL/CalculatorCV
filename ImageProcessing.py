@@ -60,7 +60,7 @@ class ImageProcessing():
             picture_with_hands = cv2.circle(picture_with_hands, hand.center, 5, black, filled)
             picture_with_hands = cv2.circle(picture_with_hands, hand.center, hand.small_radius, black, 2)
             count_fingers += hand.count_fingers
-            picture_with_hands = cv2.drawContours(picture_with_hands, hand.finger_contours, -1, black, filled)
+            picture_with_hands = cv2.drawContours(picture_with_hands, hand.finger_contours, -1, (255, 255, 255), filled)
 
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(picture_with_hands, str(count_fingers), (50, 300), font, 3, white, 3)
@@ -86,3 +86,6 @@ class ImageProcessing():
     def shrink_list_to_count(self, count, index, areas):
 
         return index, areas
+
+    def flip(self, image):
+        return cv2.flip(image, 1)

@@ -7,6 +7,7 @@ import GUI
 import Calculator
 from Button import Button
 from ButtonGenerator import ButtonGenerator
+import cv2
 
 
 picture_storage = PictureStorage()
@@ -14,13 +15,14 @@ settings = Settings.Settings()
 camera = Camera()
 tools = ImageProcessing.ImageProcessing(picture_storage, settings)
 window = Window(settings, tools, "Bilder")
+main_window = Window(settings, tools, "Taschenrechner")
 calculator = Calculator.Calculator()
 gui = GUI.GUI(calculator, picture_storage, settings)
-key = 7
+key = 6
 
 window.create_trackbars()
 while True:
-    camera_picture = camera.get_picture()
+    camera_picture = tools.flip(camera.get_picture())
     picture_storage.add_picture(camera_picture, picture_storage.ORIGINAL_FROM_CAMERA_BGR)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_FROM_CAMERA_BGR))
 
@@ -76,4 +78,9 @@ while True:
     # window.wait_key()
 
     window.show_picture(picture_storage.get_picture(key))
+    main_window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     window.wait_key(10)
+
+    # TODO: Key ändern
+
+
