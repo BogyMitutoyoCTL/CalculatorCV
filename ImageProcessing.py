@@ -2,6 +2,7 @@ import cv2
 from PictureStorage import PictureStorage
 from Settings import Settings
 from Hand import Hand
+from History import History
 
 white = (255, 255, 255)
 
@@ -89,3 +90,17 @@ class ImageProcessing():
 
     def flip(self, image):
         return cv2.flip(image, 1)
+
+    def text_in_center_hand(self, picture, center, text: str):
+
+        text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 3, 3)
+        width = text_size[0][0]
+        hight = text_size[0][1]
+        x = center[0]
+        x = x - width // 2
+        y = center [1]
+        y = y + hight // 2
+
+        picture = cv2.putText(picture, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+
+        return picture
