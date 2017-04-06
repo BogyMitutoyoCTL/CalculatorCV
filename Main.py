@@ -23,12 +23,13 @@ class Main:
         self.main_window = None
         self.calculator = None
         self.gui = None
-        self.key = None
-        self.getter = None
+        self.picture_to_show = None
+        self.keyboard_input = None
         self.history = None
 
     def start(self, getter):
-        self.getter = getter
+        self.keyboard_input = getter
+        self.picture_to_show = self.keyboard_input.get()
         self.picture_storage = PictureStorage()
         self.settings = Settings.Settings()
         self.camera = Camera()
@@ -37,15 +38,14 @@ class Main:
         self.main_window = Window(self.settings, "Taschenrechner")
         self.calculator = Calculator.Calculator()
         self.gui = GUI.GUI(self.calculator, self.picture_storage, self.settings)
-        self.key = self.getter.get()
         self.history = History()
         self._run()
 
     def _run(self):
         self.window.create_trackbars()
-        while self.key != -1:
-            if not self.getter.empty():
-                self.key = self.getter.get()
+        while self.picture_to_show != -1:
+            if not self.keyboard_input.empty():
+                self.picture_to_show = self.keyboard_input.get()
 
             camera_picture = self.tools.flip(self.camera.get_picture())
             self.picture_storage.add_picture(camera_picture.copy(), self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
@@ -110,7 +110,7 @@ class Main:
 
 
 
-            self.window.show_picture(self.picture_storage.get_picture(self.key))
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
             self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             self.window.wait_key(10)
 

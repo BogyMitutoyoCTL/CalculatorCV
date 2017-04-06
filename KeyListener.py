@@ -7,23 +7,18 @@ class KeyListener:
         self.setter = None
 
     def on_keypress(self, key: str) -> None:
-        if key == 'esc':
+        if key == 'x':
             key = -1
         key = int(key)
         self.setter.put(key)
 
-    def listen(self):
-        self.create_hotkey('0')
-        self.create_hotkey('1')
-        self.create_hotkey('2')
-        self.create_hotkey('3')
-        self.create_hotkey('4')
-        self.create_hotkey('6')
-        self.create_hotkey('7')
-        self.create_hotkey('esc')
+    def listen(self) -> None:
+        for key in ['0', '1', '2', '3', '4', '6', '7']:
+            self.register_hotkey(key)
+        keyboard.add_hotkey('esc', self.on_keypress, 'x')
         keyboard.wait('esc')
 
-    def create_hotkey(self, key: str) -> None:
+    def register_hotkey(self, key: str) -> None:
         keyboard.add_hotkey(key, self.on_keypress, key)
 
     def start(self, queue: multiprocessing.Queue) -> None:
