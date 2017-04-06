@@ -1,12 +1,14 @@
 import datetime
 
+
 class History:
     def __init__(self):
         self.Handlist = []
+        self.time = None
 
-    def add_information(self, position_of_hand_x, position_of_hand_y, time, number_of_fingers, operator):
-
-        self.Handlist.insert(0,[position_of_hand_x, position_of_hand_y, time, number_of_fingers, operator])
+    def add_information(self, position_of_hand_x, position_of_hand_y, number_of_fingers, operator):
+        self.time = datetime.datetime.now()
+        self.Handlist.insert(0,[position_of_hand_x, position_of_hand_y, self.time, number_of_fingers, operator])
 
     def get_position_of_hand_x(self, index):
         return self.Handlist[index][0]
@@ -44,13 +46,13 @@ class History:
 
 
 test = History()
-test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 10), 6, None)
-test.add_information(54, 6, datetime.datetime(2017, 4, 6, 12, 45, 11), 6, "+")
-test.add_information(1, 7, datetime.datetime(2017, 4, 6, 12, 45, 12), 6, "-")
-test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 13), 5, None)
-test.add_information(54, 6, datetime.datetime(2017, 4, 6, 12, 45, 14), 8, "+")
-test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 19), 5, None)
-test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 20), 8, None)
+test.add_information(61, 5, 6, None)
+test.add_information(54, 6, 6, "+")
+test.add_information(1, 7, 6, "-")
+test.add_information(61, 5, 5, None)
+test.add_information(54, 6, 8, "+")
+test.add_information(61, 5, 5, None)
+test.add_information(61, 5, 8, None)
 
 print(test.Handlist)
 print(test.confirmed_finger_number())
