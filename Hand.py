@@ -10,6 +10,7 @@ class Hand:
         self.small_radius = small_radius
         self.contour = contour
         self.area = area
+        self.finger_contours = None
 
     def fingers(self, picture_blurred_bw):
         self.set_radius()
@@ -24,6 +25,7 @@ class Hand:
             cv2.circle(picture_with_circles, self.center, radius, (0, 0, 0), -1)
 
         _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        self.finger_contours = contours
         count = len(contours) - 1
         # if self.center == (0, 0):
         #     count += 1
@@ -38,7 +40,7 @@ class Hand:
                 self.big_radius = int(radius1)
             else:
                 self.big_radius = 0
-            self.small_radius = int(0.67 * self.big_radius)
+            self.small_radius = int(0.68 * self.big_radius)
 
     def get_big_radius(self, ):
         return self.big_radius

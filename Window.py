@@ -15,8 +15,8 @@ class Window:
         # TODO: hack
         self.image_width_px = len(picture[0])
 
-    def wait_key(self):
-        cv2.waitKey(0) & 0xFF
+    def wait_key(self, time):
+        cv2.waitKey(time) & 0xFF
 
     def create_trackbars(self):
         cv2.createTrackbar("lower_h", self.window_name, 40, 180, self.lower_h_changed)

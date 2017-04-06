@@ -3,6 +3,13 @@ from PictureStorage import PictureStorage
 from Settings import Settings
 from Hand import Hand
 
+white = (255, 255, 255)
+
+filled = -1
+
+black = (0, 0, 0)
+
+
 class ImageProcessing():
     def __init__(self, picture_storage : PictureStorage, settings : Settings):
         self.picture_storage = picture_storage
@@ -45,15 +52,18 @@ class ImageProcessing():
         return hands
 
     def draw_hands(self, hands: [Hand], picture_to_draw_on):
-        picture_with_hands = picture_to_draw_on
+        picture_with_hands = picture_to_draw_on.copy()
         count_fingers = 0
         for i in range(len(hands)):
             hand = hands[i]
-            picture_with_hands = cv2.drawContours(picture_with_hands, hand.contour, 0, (255, 255, 255), 2)
-            picture_with_hands = cv2.circle(picture_with_hands, hand.center, 5, (255, 0, 0), -1)
+            picture_with_hands = cv2.drawContours(picture_with_hands, hand.contour, 0, white)
+            picture_with_hands = cv2.circle(picture_with_hands, hand.center, 5, black, filled)
+            picture_with_hands = cv2.circle(picture_with_hands, hand.center, hand.small_radius, black, 2)
             count_fingers += hand.count_fingers
+            picture_with_hands = cv2.drawContours(picture_with_hands, hand.finger_contours, -1, black, filled)
+
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(picture_with_hands, str(count_fingers), (0, 100), font, 3, (255, 255, 255), 3)
+        cv2.putText(picture_with_hands, str(count_fingers), (50, 300), font, 3, white, 3)
         return picture_with_hands
 
     def get_indexes_of_contours_bigger_than_minimal(self, contours, minimal_size_in_pixel, count):
