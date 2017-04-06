@@ -1,6 +1,6 @@
 class PictureStorage:
     def __init__(self):
-        self.pictures = [None, None, None, None, None, None, None, None, None]
+        self.pictures = [None, None, None, None, None, None, None, None]
 
         # Constants for picture indexes
         self.ORIGINAL_FROM_CAMERA_BGR = 0
@@ -9,9 +9,8 @@ class PictureStorage:
         self.GLOVES_BLURRED_BW = 3
         self.GLOVES_WITH_ORIGINAL_BGR = 4
         self.CONTOUR_OF_GLOVES_BGR = 5
-        self.CIRCLE_CENTER_BGR = 6
-        self.HANDS_BW = 7
-        self.ORIGINAL_WITH_FELD = 8
+        self.HANDS_BW = 6
+        self.ORIGINAL_WITH_FELD = 7
 
     def add_picture(self, bild, index):
         self.pictures[index] = bild
