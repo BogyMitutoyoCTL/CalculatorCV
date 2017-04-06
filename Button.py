@@ -1,5 +1,6 @@
 import cv2
 
+
 class Button:
     def __init__(self, top_x: int, top_y: int, bottom_x: int, bottom_y: int, text: str, scale):
         self.top_left = (top_x, top_y)
@@ -16,21 +17,19 @@ class Button:
         self.scale = scale
         self.thickness_rect = 5
         self.thickness_text = 2
-        self.division = 2
-
 
     def draw_field(self, picture):
         picture = picture.copy()
-        picture = cv2.rectangle(picture, self.top_left, self.bottom_right, self.color, self.thickness_rect)
+        cv2.rectangle(picture, self.top_left, self.bottom_right, self.color, self.thickness_rect)
 
         text_size = cv2.getTextSize(self.text, self.text_shape, self.scale, self.thickness_text)
         width = text_size[0][0]
-        hight = text_size[0][1]
+        height = text_size[0][1]
 
-        x = self.total_x // self.division - width // self.division
-        y = self.total_y // self.division + hight // self.division
+        x = self.total_x // 2 - width // 2
+        y = self.total_y // 2 + height // 2
 
-        picture = cv2.putText(picture, self.text, (x, y), self.text_shape, self.scale, self.color, self.thickness_text)
+        cv2.putText(picture, self.text, (x, y), self.text_shape, self.scale, self.color, self.thickness_text)
 
         return picture
 
@@ -46,5 +45,5 @@ class Button:
     def get_bottom_y(self):
         return self.bottom_right[1]
 
-    def field_recognizion(self, hand_x, hand_y):
+    def field_recognition(self, hand_x, hand_y):
         return self.top_x <= hand_x <= self.bottom_x and self.top_y <= hand_y <= self.bottom_y

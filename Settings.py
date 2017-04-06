@@ -1,5 +1,3 @@
-
-
 class Settings:
     def __init__(self):
         self.lower_h = 40
@@ -10,23 +8,23 @@ class Settings:
         self.upper_v = 190
         self.minimum_recognition_size_px = 10
 
-    def change_lower_h(self, wert):
-        self.lower_h = wert
+    def change_lower_h(self, hue: int) -> None:
+        self.lower_h = hue
 
-    def change_upper_h(self, wert):
-        self.upper_h = wert
+    def change_upper_h(self, hue: int) -> None:
+        self.upper_h = hue
 
-    def change_lower_s(self, wert):
-        self.lower_s = wert
+    def change_lower_s(self, saturation: int) -> None:
+        self.lower_s = saturation
 
-    def change_upper_s(self, wert):
-        self.upper_s = wert
+    def change_upper_s(self, saturation: int) -> None:
+        self.upper_s = saturation
 
-    def change_lower_v(self, wert):
-        self.lower_v = wert
+    def change_lower_v(self, value: int) -> None:
+        self.lower_v = value
 
-    def change_upper_v(self, wert):
-        self.upper_v = wert
+    def change_upper_v(self, value: int) -> None:
+        self.upper_v = value
 
-    def change_size(self, wert):
-        self.minimum_recognition_size_px = wert
+    def change_recognition_size(self, minimum_size_px: int) -> None:
+        self.minimum_recognition_size_px = minimum_size_px
