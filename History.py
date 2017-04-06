@@ -24,18 +24,20 @@ class History:
         return self.Handlist[index][4]
 
     def confirm_fingers(self):
-        return self.confirm_newest_finger()
+        for x in range(0, len(self.Handlist)):
+            print(self.confirm_newest_finger(x), self.get_number_of_fingers(x))
 
-    def confirm_newest_finger(self):
-        self.get_number_of_fingers(0)
-        time_now = self.get_time(0)
-        time_old = time_now
-        i = 1
-        while self.get_number_of_fingers(i) == self.get_number_of_fingers(0):
-            time_old = self.get_time(i)
-            i += 1
-        time_difference = time_now - time_old
-        return time_difference > datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+    def confirm_newest_finger(self, x):
+
+            self.get_number_of_fingers(x)
+            time_now = self.get_time(x)
+            time_old = time_now
+            i = x + 1
+            while i < len(self.Handlist) and self.get_number_of_fingers(i) == self.get_number_of_fingers(x):
+                time_old = self.get_time(i)
+                i += 1
+            time_difference = time_now - time_old
+            return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
 
 test = History()
