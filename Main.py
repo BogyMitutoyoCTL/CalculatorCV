@@ -59,16 +59,14 @@ while True:
 
     felder.paint_term(3, "/", 4)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
+    #window.wait_key()
+    hands = tools.get_hands(blurred_picture, settings.minimum_recognition_size_px, 2)
+    for hand in hands:
+        print(hand.center)
+        hand.get_center()
+        print(hand.center)
+        hand_picture = hand.fingers(blurred_picture)
+        window.show_picture(hand_picture)
+        window.wait_key()
+    window.show_picture(tools.draw_hands(hands, blurred_picture))
     window.wait_key()
-
-    felder.kontur()
-    window.show_picture(picture_storage.get_picture(picture_storage.CONTOUR_OF_GLOVES_BGR))
-    window.wait_key()
-
-    felder.kontur_mittelpunkt()
-    print(settings.get_center1(), settings.get_center2())
-    felder.count_fingers()
-    felder.paint_term(settings.finger_count)
-    window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
-    window.wait_key()
-    settings.reset()

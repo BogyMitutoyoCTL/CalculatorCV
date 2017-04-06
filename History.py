@@ -1,45 +1,22 @@
-<<<<<<< HEAD
-class Historie:
-=======
 class History:
->>>>>>> origin/master
     def __init__(self):
 
         self.Handlist = []
         i = 0
-<<<<<<< HEAD
-        while i <=20:
-            self.Handlist.append([None, None])
-            i = i + 1
-
-
-
-    def ad_Handposition(self, handposition, uhrzeit):
-
-        self.Handlist[0:0][0:0] = [handposition]
-        self.Handlist[0:1][0:0] = [uhrzeit]
-=======
         while i <= 20:
-            self.Handlist.append([None, None])
+            self.Handlist.append([None, None, None, None, None])
             i = i + 1
 
-    def add_position_of_hand(self, position_of_hand, time):
+    def add_position_of_hand(self, position_of_hand_x, position_of_hand_y, time, number_of_fingers, operator):
 
-        self.Handlist[0:0][0:0] = [position_of_hand]
-        self.Handlist[0:1][0:0] = [time]
->>>>>>> origin/master
+        self.Handlist[0:0] = [position_of_hand_x, position_of_hand_y, time, number_of_fingers, operator]
         del self.Handlist[20]
         print(self.Handlist)
 
 
-<<<<<<< HEAD
-test = Historie()
-test.ad_Handposition(61)
-test.ad_Handposition(54)
-test.ad_Handposition(1)
-=======
 test = History()
-test.add_position_of_hand(61)
-test.add_position_of_hand(54)
-test.add_position_of_hand(1)
->>>>>>> origin/master
+test.add_position_of_hand(61, 5, 1, 8, None)
+test.add_position_of_hand(54, 6, 2, 8, "+")
+test.add_position_of_hand(1, 7, 3, 3, "-")
+if __name__ == "__main__":
+    print("Please run Main.")
