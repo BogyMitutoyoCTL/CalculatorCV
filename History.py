@@ -53,6 +53,6 @@ test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 19), 5, None)
 test.add_information(61, 5, datetime.datetime(2017, 4, 6, 12, 45, 20), 8, None)
 
 print(test.Handlist)
-print(test.confirm_fingers())
+print(test.confirmed_finger_number())
 if __name__ == "__main__":
     print("Please run Main.")
