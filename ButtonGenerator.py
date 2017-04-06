@@ -5,9 +5,9 @@ from typing import *
 
 class ButtonGenerator:
     def __init__(self, picture_storage: PictureStorage):
-        self.picture = picture_storage.get_picture(0)
-        self.width = len(self.picture[0])
-        self.height = len(self.picture)
+        picture = picture_storage.get_picture(0)
+        self.width = len(picture[0])
+        self.height = len(picture)
         self.section_count = 15
         self.default_button_size = 3
         self.margin = 1

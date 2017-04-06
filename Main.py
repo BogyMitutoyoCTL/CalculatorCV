@@ -56,7 +56,7 @@ class Main:
             field_picture = camera_picture
             for field in fields:
                 field_picture = field.draw_field(field_picture)
-                self.picture_storage.add_picture(field_picture, self.picture_storage.ORIGINAL_WITH_FELD)
+                self.picture_storage.add_picture(field_picture, self.picture_storage.GUI_BGR)
                 self.window.show_picture(field_picture)
 
             # window.wait_key()
@@ -83,7 +83,7 @@ class Main:
 
             self.gui.paint_term(3, "+", 5)
 
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             # window.wait_key()
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
             for hand in hands:
@@ -95,23 +95,23 @@ class Main:
                 # window.wait_key()
                 self.history.add_information(hand.center, hand.count_fingers, None)
                 text = str(hand.count_fingers)
-                pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD),
+                pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center, text)
-                self.picture_storage.add_picture(pic, self.picture_storage.ORIGINAL_WITH_FELD)
+                self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
-            hands_picture_bgr = self.tools.draw_hands(hands, self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
-            self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.ORIGINAL_WITH_FELD)
+            hands_picture_bgr = self.tools.draw_hands(hands, self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
+            self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.GUI_BGR)
             self.window.show_picture(hands_picture_bw)
             # window.wait_key()
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             # window.wait_key()
 
 
 
             self.window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
-            self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
+            self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             self.window.wait_key(10)
 
 if __name__ == "__main__":
