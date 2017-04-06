@@ -14,15 +14,14 @@ class Hand:
     def fingers(self, picture_blurred_bw):
         self.set_radius()
         radius = self.get_small_radius()
-
+        picture_with_circles = picture_blurred_bw.copy()
         if radius is not None:
-            picture_with_circles = cv2.circle(picture_blurred_bw, self.center, radius, (0, 0, 0), -1)
             size = picture_blurred_bw.shape
             black_image = numpy.zeros((size[0], size[1], 1), numpy.uint8)
-            cv2.circle(black_image, self.center, self.small_radius, (255, 255, 255), -1)
+            cv2.circle(black_image, self.center, self.big_radius, (255, 255, 255), -1)
+            cv2.bitwise_not(black_image, black_image)
             cv2.bitwise_and(picture_with_circles, 0, picture_with_circles, black_image)
-        else:
-            picture_with_circles = picture_blurred_bw
+            cv2.circle(picture_with_circles, self.center, radius, (0, 0, 0), -1)
 
         _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         count = len(contours) - 1
