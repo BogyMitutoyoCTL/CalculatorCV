@@ -1,5 +1,7 @@
 import datetime
 from HistoryData import HistoryData
+from Button import Button
+from ButtonGenerator import ButtonGenerator
 
 
 class History:
@@ -42,6 +44,61 @@ class History:
         time_difference = time_now - time_old
         return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
+    def confirmed_operator(self, button_generator: ButtonGenerator):
+        operator = None
+        if self.is_hand_center_in_addition(button_generator.draw_all_buttons()[0]) is True:
+            operator = "+"
+        if self.is_hand_center_in_subtraction(button_generator.draw_all_buttons()[1]) is True:
+            operator = "-"
+        if self.is_hand_center_in_multiply(button_generator.draw_all_buttons()[2]) is True:
+            operator = "*"
+        if self. is_hand_center_in_divide(button_generator.draw_all_buttons()[4]) is True:
+            operator = "/"
+        return operator
+
+    def is_hand_center_in_addition(self, addition: Button):
+        self.get_center_of_hand(0)
+        time_now = self.get_time(0)
+        time_old = time_now
+        i = 0
+        while i < len(self.Handlist) and addition.field_recognizion(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+            time_now = self.get_time(i)
+            i += 1
+        time_difference = time_now - time_old
+        return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+
+    def is_hand_center_in_subtraction(self, subtraction: Button):
+        self.get_center_of_hand(0)
+        time_now = self.get_time(0)
+        time_old = time_now
+        i = 0
+        while i < len(self.Handlist) and subtraction.field_recognizion(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+            time_now = self.get_time(i)
+            i += 1
+        time_difference = time_now - time_old
+        return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+
+    def is_hand_center_in_multiply(self, multiply: Button):
+        self.get_center_of_hand(0)
+        time_now = self.get_time(0)
+        time_old = time_now
+        i = 0
+        while i < len(self.Handlist) and multiply.field_recognizion(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+            time_now = self.get_time(i)
+            i += 1
+        time_difference = time_now - time_old
+        return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+
+    def is_hand_center_in_divide(self, division: Button):
+        self.get_center_of_hand(0)
+        time_now = self.get_time(0)
+        time_old = time_now
+        i = 0
+        while i < len(self.Handlist) and division.field_recognizion(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+            time_now = self.get_time(i)
+            i += 1
+        time_difference = time_now - time_old
+        return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
 test = History()
 test.add_information((61, 5), 6, None)
@@ -54,7 +111,7 @@ test.add_information((61, 5), 8, None)
 
 print(test.Handlist)
 print(test.confirmed_finger_number())
-print(test.get_number_of_fingers(0))
+print(test.get_center_of_hand(0))
 if __name__ == "__main__":
     print("Please run Main.")
 

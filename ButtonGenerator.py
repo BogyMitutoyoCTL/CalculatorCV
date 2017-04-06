@@ -81,6 +81,5 @@ class ButtonGenerator:
     def from_right(self):
         return self.from_bottom_right(self.width)
 
-
     def calculate_bottom(self, top_x, x, button_width):
         return top_x + button_width * x // self.section_count
