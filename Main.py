@@ -28,8 +28,9 @@ while True:
 
     TestFenster = ButtonGenerator(picture_storage)
     fields = TestFenster.draw_all_buttons()
+    field_picture = camera_picture
     for field in fields:
-        field_picture = field.draw_field(camera_picture)
+        field_picture = field.draw_field(field_picture)
 
 
     window.show_picture(field_picture)
@@ -60,13 +61,13 @@ while True:
     felder.paint_term(3, "/", 4)
     window.show_picture(picture_storage.get_picture(picture_storage.ORIGINAL_WITH_FELD))
     #window.wait_key()
-    hands = tools.get_hands(blurred_picture, settings.minimum_recognition_size_px, 2)
+    hands = tools.get_hands(camera_blurred_bw, settings.minimum_recognition_size_px, 2)
     for hand in hands:
         print(hand.center)
         hand.get_center()
         print(hand.center)
-        hand_picture = hand.fingers(blurred_picture)
+        hand_picture = hand.fingers(camera_blurred_bw)
         window.show_picture(hand_picture)
         window.wait_key()
-    window.show_picture(tools.draw_hands(hands, blurred_picture))
+    window.show_picture(tools.draw_hands(hands, camera_blurred_bw))
     window.wait_key()

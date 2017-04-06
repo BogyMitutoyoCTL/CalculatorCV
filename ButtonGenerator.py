@@ -2,6 +2,7 @@ import cv2
 from PictureStorage import PictureStorage
 from Button import Button
 
+
 class ButtonGenerator:
     def __init__(self, picture_storage: PictureStorage):
         self.picture = picture_storage.get_picture(0)

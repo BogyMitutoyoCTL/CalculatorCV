@@ -3,7 +3,6 @@ from PictureStorage import PictureStorage
 from Settings import Settings
 from Hand import Hand
 
-
 class ImageProcessing():
     def __init__(self, picture_storage : PictureStorage, settings : Settings):
         self.picture_storage = picture_storage

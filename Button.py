@@ -1,6 +1,7 @@
 import cv2
 from PictureStorage import PictureStorage
 
+
 class Button:
     def __init__(self, top_x: int, top_y: int, bottom_x: int, bottom_y: int, text: str):
         self.top_left = (top_x, top_y)
@@ -15,7 +16,7 @@ class Button:
 
 
     def draw_field(self, picture):
-
+        picture = picture.copy()
         picture = cv2.rectangle(picture, self.top_left, self.bottom_right, self.color, self.thickness)
 
         x = (self.top_x + self.bottom_x) // 2
