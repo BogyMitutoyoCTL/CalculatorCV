@@ -108,6 +108,8 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             # window.wait_key()
 
+
+
             self.window.show_picture(self.picture_storage.get_picture(self.key))
             self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             self.window.wait_key(10)

@@ -58,7 +58,7 @@ class History:
         time_now = self.get_time(0)
         time_old = time_now
         i = 0
-        while i < len(self.Handlist) and button.field_recognition(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+        while i < len(self.Handlist) and button.contains_point(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
             time_now = self.get_time(i)
             i += 1
         time_difference = time_now - time_old
