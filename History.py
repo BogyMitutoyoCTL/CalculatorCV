@@ -9,9 +9,9 @@ class History:
     def __init__(self):
         self.hand_list = []
 
-    def add_information(self, center_of_hand, number_of_fingers: int, operator) -> None:
+    def add_information(self, center_of_hand, number_of_fingers: int) -> None:
         time = datetime.datetime.now()
-        history_data = HistoryData(center_of_hand, time, number_of_fingers, operator)
+        history_data = HistoryData(center_of_hand, time, number_of_fingers)
         self.hand_list.insert(0, history_data)
 
     def get_center_of_hand(self, index) -> Tuple[int, int]:
@@ -29,7 +29,7 @@ class History:
     def confirmed_finger_number(self):
         number = None
         for point_in_history in range(len(self.hand_list)):
-            if self.confirm_fingers_from_point_in_past(point_in_history) is True:
+            if self.confirm_fingers_from_point_in_past(point_in_history):
                 number = self.get_number_of_fingers(point_in_history)
         return number
 
@@ -45,49 +45,44 @@ class History:
 
     def confirmed_delete(self, button_generator: ButtonGenerator) -> bool:
         delete = False
-        if self.confirm_button(button_generator.generate_all_buttons()[3]) is True:
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[3]):
             delete = True
         return delete
 
     def confirmed_operator(self, button_generator: ButtonGenerator):
         operator = None
-        for point_in_history in range(len(self.hand_list)):
-            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[0], point_in_history) is True:
-                operator = "+"
-            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[1], point_in_history) is True:
-                operator = "-"
-            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[2], point_in_history) is True:
-                operator = "*"
-            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[4], point_in_history) is True:
-                operator = "/"
+        
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[0]):
+            operator = "+"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[1]):
+            operator = "-"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[2]):
+            operator = "*"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[4]):
+            operator = "/"
         return operator
 
+    def confirmed_buttons(self, button: Button):
+        for point_in_history in range(len(self.hand_list)):
+            if self.confirm_button_from_point_in_past(button, point_in_history):
+                return True
+        return False
+        
     def confirm_button_from_point_in_past(self, button: Button, x) -> bool:
         time_now = self.get_time(x)
-        time_old = time_now
+        time_old = time_now - datetime.timedelta(0, 3, 0, 0, 0, 0, 0)
         i = x + 1
-        while i < len(self.hand_list) and button.contains_point(self.get_center_of_hand(i)) is True and button.contains_point(self.get_center_of_hand(x))is True:
+        in_button_count = 0
+        out_of_button_count = 0
+        while i < len(self.hand_list) and time_old <= time_now:
             time_now = self.get_time(i)
+            if button.contains_point(self.get_center_of_hand(i)):
+                in_button_count += 1
+            else:
+                out_of_button_count += 1
             i += 1
-        time_difference = time_now - time_old
-        return time_difference >= datetime.timedelta(0, 3, 0, 0, 0, 0, 0)
+        return (2 * in_button_count) > out_of_button_count
 
     def reset(self):
         self.hand_list = []
-
-test = History()
-test.add_information((61, 5), 6, None)
-test.add_information((54, 6), 6, "+")
-test.add_information((1, 7), 6, "-")
-test.add_information((61, 5), 5, None)
-test.add_information((54, 6), 8, "+")
-test.add_information((61, 5), 5, None)
-test.add_information((61, 5), 8, None)
-
-print(test.hand_list)
-print(test.confirmed_finger_number())
-print(test.get_center_of_hand(0))
-if __name__ == "__main__":
-    print("Please run Main.")
-
 
