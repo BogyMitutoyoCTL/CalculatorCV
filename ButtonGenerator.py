@@ -79,9 +79,9 @@ class ButtonGenerator:
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
         bottom_y = self.calculate_bottom(top_y, self.height, 2)
 
-        text = "hoch"
+        text = "^"
 
-        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale)
 
     def create_wurzel(self):
         top_x = self.from_right()
@@ -89,7 +89,7 @@ class ButtonGenerator:
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
         bottom_y = self.calculate_bottom(top_y, self.height, 2)
 
-        text = "wurzel"
+        text = "root"
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
@@ -103,13 +103,13 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def create_rest(self):
+    def create_modulo(self):
         top_x = self.from_left(1)
         top_y = self.from_top(8)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
         bottom_y = self.calculate_bottom(top_y, self.height, 2)
 
-        text = "Modulo"
+        text = "modulo"
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
@@ -123,7 +123,7 @@ class ButtonGenerator:
                 self.create_hoch_field(),
                 self.create_wurzel(),
                 self.create_division_without(),
-                self.create_rest()]
+                self.create_modulo()]
 
     def from_top_left(self, x, count) -> int:
         return x // self.section_count * self.margin * count

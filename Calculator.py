@@ -19,6 +19,7 @@ class Calculator:
         elif operator == "v":
             if value1 > 0:
                 result = value2 ** (1/value1)
+                result = result * 100
                 result = int(result)
                 result = result / 100
                 return str(result)
