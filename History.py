@@ -43,6 +43,12 @@ class History:
         time_difference = time_now - time_old
         return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
+    def confirmed_delete(self, button_generator: ButtonGenerator):
+        delete = None
+        if self.confirm_button(button_generator.generate_all_buttons()[3]) is True:
+            delete = 1
+        return delete
+
     def confirmed_operator(self, button_generator: ButtonGenerator):
         operator = None
         if self.confirm_button(button_generator.generate_all_buttons()[0]) is True:

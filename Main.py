@@ -90,8 +90,8 @@ class Main:
 
             # self.gui.paint_term(3, "+", 5)
 
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
-            # window.wait_key()
+            #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
+            #self.window.wait_key(0)
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
             countfingers = 0
             for hand in hands:
