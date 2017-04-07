@@ -25,12 +25,14 @@ class Calculator:
             else:
                 string += " "
                 string += operator
+                string += " "
 
                 if number2 is None:
                     pass
 
                 else:
                     result = self.calculate(number1, number2, operator)
+                    result = str(result)
                     string += str(number2)
                     string += " = "
                     string += result

@@ -123,6 +123,9 @@ class Main:
                 self.number2 = countfingers
                 if self.history.confirmed_finger_number() is not None:
                     self.stage = 0
+                    self.number1 = None
+                    self.number2 = None
+                    self.operator = None
                     self.history.reset()
 
             term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2, False)
