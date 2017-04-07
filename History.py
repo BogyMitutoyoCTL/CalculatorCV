@@ -70,7 +70,7 @@ class History:
             time_now = self.get_time(i)
             i += 1
         time_difference = time_now - time_old
-        return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+        return time_difference >= datetime.timedelta(0, 3, 0, 0, 0, 0, 0)
 
     def reset(self):
         self.hand_list = []
