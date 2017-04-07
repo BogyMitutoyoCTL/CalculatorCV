@@ -63,7 +63,7 @@ class Hand:
     def get_small_radius(self):
         return self.small_radius
 
-    def get_center(self):
+    def init_center(self):
         M = cv2.moments(self.contour)
         if M["m00"] != 0:
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))

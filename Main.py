@@ -95,31 +95,33 @@ class Main:
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px)
             countfingers = 0
             for hand in hands:
-                hand.get_center()
+                hand.init_center()
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
-
+                if self.stage == 1:
+                    self.history.add_information(hand.center_of_hand, None)
                 text = str(hand.number_of_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
                 countfingers += hand.number_of_fingers
 
-            self.history.add_information(None, countfingers, None)
             if self.stage == 0:
+                self.history.add_information(None, countfingers)
                 self.number1 = countfingers
                 if self.history.confirmed_finger_number() is not None:
-                    self.stage = 2
+                    self.stage = 1
                     self.history.reset()
-                    self.operator = '+'
             elif self.stage == 1:
                 confirmed_operator = self.history.confirmed_operator(self.buttons)
+                print(confirmed_operator)
                 if confirmed_operator is not None:
                     self.operator = confirmed_operator
                     self.stage = 2
                     self.history.reset()
             elif self.stage == 2:
+                self.history.add_information(None, countfingers)
                 self.number2 = countfingers
                 if self.history.confirmed_finger_number() is not None:
                     self.main_window.wait_key(1000)
