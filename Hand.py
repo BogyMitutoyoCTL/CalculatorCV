@@ -18,18 +18,35 @@ class Hand:
         picture_with_circles = picture_blurred_bw.copy()
         if small_radius is not None:
             size = picture_blurred_bw.shape
-            black_image = numpy.zeros((size[0], size[1], 1), numpy.uint8)
-            cv2.circle(black_image, self.center_of_hand, self.big_radius, (255, 255, 255), -1)
-            cv2.bitwise_not(black_image, black_image)
-            cv2.bitwise_and(picture_with_circles, 0, picture_with_circles, black_image)
-            cv2.circle(picture_with_circles, self.center_of_hand, small_radius, (0, 0, 0), -1)
+            black_image = self.generate_black_image(size)
+            self.cut_picture_on_mask(black_image, picture_with_circles)
+            self.draw_black_circle_on_white_picture(picture_with_circles, small_radius)
 
-        _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        self.finger_contours = contours
+        contours = self.get_finger_contours(picture_with_circles)
+        self.count_finger_contours(contours)
+
+        return picture_with_circles
+
+    def count_finger_contours(self, contours):
         number = len(contours) - 1
         self.number_of_fingers = number
 
-        return picture_with_circles
+    def get_finger_contours(self, picture_with_circles):
+        _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        self.finger_contours = contours
+        return contours
+
+    def draw_black_circle_on_white_picture(self, picture_with_circles, small_radius):
+        cv2.circle(picture_with_circles, self.center_of_hand, small_radius, (0, 0, 0), -1)
+
+    def cut_picture_on_mask(self, black_image, picture_with_circles):
+        cv2.bitwise_and(picture_with_circles, 0, picture_with_circles, black_image)
+
+    def generate_black_image(self, size):
+        black_image = numpy.zeros((size[0], size[1], 1), numpy.uint8)
+        cv2.circle(black_image, self.center_of_hand, self.big_radius, (255, 255, 255), -1)
+        cv2.bitwise_not(black_image, black_image)
+        return black_image
 
     def set_radius(self):
         if self.big_radius is None:

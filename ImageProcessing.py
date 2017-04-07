@@ -80,27 +80,25 @@ class ImageProcessing():
                 # TODO: get contours directly (optional, looks nicer in code)
                 index.append(i)
 
-        index, areas = self.shrink_list_to_count(count, index, areas)
+        index, areas = self.shrink_list_to_count(index, areas)
         return index, areas
 
     # TODO: shrink_list_to_count(count, index, areas)(if you want to have only a special number of hands)
 
-    def shrink_list_to_count(self, count, index, areas):
-
+    def shrink_list_to_count(self, index, areas):
         return index, areas
 
     def flip(self, image):
         return cv2.flip(image, 1)
 
     def text_in_center_hand(self, picture, center, text: str):
-
         text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 3, 3)
         width = text_size[0][0]
         hight = text_size[0][1]
         x = center[0]
-        x = x - width // 2
-        y = center [1]
-        y = y + hight // 2
+        x -= width // 2
+        y = center[1]
+        y += hight // 2
 
         picture = cv2.putText(picture, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
 
