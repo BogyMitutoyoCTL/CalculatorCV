@@ -43,10 +43,10 @@ class History:
         time_difference = time_now - time_old
         return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
-    def confirmed_delete(self, button_generator: ButtonGenerator):
-        delete = None
-        if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[3]) is True:
-            delete = 1
+    def confirmed_delete(self, button_generator: ButtonGenerator) -> bool:
+        delete = False
+        if self.confirm_button(button_generator.generate_all_buttons()[3]) is True:
+            delete = True
         return delete
 
     def confirmed_operator(self, button_generator: ButtonGenerator):
