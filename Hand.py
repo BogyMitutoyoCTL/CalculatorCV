@@ -3,9 +3,9 @@ import numpy
 
 
 class Hand:
-    def __init__(self, count_fingers=None, center=None, big_radius=None, small_radius=None, contour=None, area=None):
-        self.count_fingers = count_fingers
-        self.center = center
+    def __init__(self, number_of_fingers=None, center_of_hand=None, big_radius=None, small_radius=None, contour=None, area=None):
+        self.number_of_fingers = number_of_fingers
+        self.center_of_hand = center_of_hand
         self.big_radius = big_radius
         self.small_radius = small_radius
         self.contour = contour
@@ -14,22 +14,20 @@ class Hand:
 
     def fingers(self, picture_blurred_bw):
         self.set_radius()
-        radius = self.get_small_radius()
+        small_radius = self.get_small_radius()
         picture_with_circles = picture_blurred_bw.copy()
-        if radius is not None:
+        if small_radius is not None:
             size = picture_blurred_bw.shape
             black_image = numpy.zeros((size[0], size[1], 1), numpy.uint8)
-            cv2.circle(black_image, self.center, self.big_radius, (255, 255, 255), -1)
+            cv2.circle(black_image, self.center_of_hand, self.big_radius, (255, 255, 255), -1)
             cv2.bitwise_not(black_image, black_image)
             cv2.bitwise_and(picture_with_circles, 0, picture_with_circles, black_image)
-            cv2.circle(picture_with_circles, self.center, radius, (0, 0, 0), -1)
+            cv2.circle(picture_with_circles, self.center_of_hand, small_radius, (0, 0, 0), -1)
 
         _, contours, _ = cv2.findContours(picture_with_circles, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         self.finger_contours = contours
-        count = len(contours) - 1
-        # if self.center == (0, 0):
-        #     count += 1
-        self.count_fingers = count
+        number = len(contours) - 1
+        self.number_of_fingers = number
 
         return picture_with_circles
 
@@ -42,10 +40,10 @@ class Hand:
                 self.big_radius = 0
             self.small_radius = int(0.68 * self.big_radius)
 
-    def get_big_radius(self, ):
+    def get_big_radius(self):
         return self.big_radius
 
-    def get_small_radius(self, ):
+    def get_small_radius(self):
         return self.small_radius
 
     def get_center(self):
@@ -56,6 +54,6 @@ class Hand:
         else:
             center = (0, 0)
 
-        self.center = center
+        self.center_of_hand = center
 
 

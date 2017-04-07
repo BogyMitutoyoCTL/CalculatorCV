@@ -3,6 +3,7 @@ from PictureStorage import PictureStorage
 from Settings import Settings
 from Hand import Hand
 from History import History
+from typing import List
 
 white = (255, 255, 255)
 
@@ -43,7 +44,7 @@ class ImageProcessing():
 
         return color_glove_image
 
-    def get_hands(self, start_picture, minimal_size, count):
+    def get_hands(self, start_picture, minimal_size, count) -> List[Hand]:
         hands = []
         _, contours, _ = cv2.findContours(start_picture, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if contours is not None:
@@ -58,8 +59,8 @@ class ImageProcessing():
         for i in range(len(hands)):
             hand = hands[i]
             picture_with_hands = cv2.drawContours(picture_with_hands, hand.contour, 0, white)
-            picture_with_hands = cv2.circle(picture_with_hands, hand.center, 5, black, filled)
-            picture_with_hands = cv2.circle(picture_with_hands, hand.center, hand.small_radius, black, 2)
+            picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, 5, black, filled)
+            picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, hand.small_radius, black, 2)
             # count_fingers += hand.count_fingers
             picture_with_hands = cv2.drawContours(picture_with_hands, hand.finger_contours, -1, (255, 255, 255), filled)
 

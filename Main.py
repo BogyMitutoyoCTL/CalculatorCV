@@ -94,10 +94,10 @@ class Main:
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
-                self.history.add_information(hand.center, hand.count_fingers, None)
-                text = str(hand.count_fingers)
+                self.history.add_information(hand.center_of_hand, hand.number_of_fingers, None)
+                text = str(hand.number_of_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
-                                                hand.center, text)
+                                                hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
                 self.gui.paint_term(self.history.confirmed_finger_number(), None, None, None)
 
