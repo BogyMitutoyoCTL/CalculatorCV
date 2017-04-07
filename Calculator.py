@@ -17,8 +17,26 @@ class Calculator:
         elif operator == "**":
             return str(value1 ** value2)
         elif operator == "v":
-            return str(value2 ** (1/value1))
+            if value1 > 0:
+                result = value2 ** (1/value1)
+                result = int(result)
+                result = result / 100
+                return str(result)
+            else:
+                return "Error"
+        elif operator == "//":
+            if value2 > 0:
+                return str(value1 // value2)
+            else:
+                return "Error"
+
+        elif operator == "%":
+            if value2 > 0:
+                return str(value1 % value2)
+            else:
+                return "Error"
         else:
+
             raise RuntimeError("Wrong calculator operator")
 
 

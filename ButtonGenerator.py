@@ -73,17 +73,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def choosing_field(self) -> Button:
-        top_x = self.from_left(4)
-        top_y = self.from_top(4)
-        bottom_x = self.calculate_bottom(top_x, self.width, 7)
-        bottom_y = self.calculate_bottom(top_y, self.height, 7)
-
-        text = ""
-
-        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
-
-    def hoch_field(self):
+    def create_hoch_field(self):
         top_x = self.from_right()
         top_y = self.from_top(5)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -93,7 +83,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def wurzel(self):
+    def create_wurzel(self):
         top_x = self.from_right()
         top_y = self.from_top(8)
         bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
@@ -103,16 +93,37 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
+    def create_division_without(self):
+        top_x = self.from_left(1)
+        top_y = self.from_top(5)
+        bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
+        bottom_y = self.calculate_bottom(top_y, self.height, 2)
+
+        text = "//"
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
+    def create_rest(self):
+        top_x = self.from_left(1)
+        top_y = self.from_top(8)
+        bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
+        bottom_y = self.calculate_bottom(top_y, self.height, 2)
+
+        text = "Modulo"
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
     def generate_all_buttons(self) -> [Button]:
         return [self.create_add_button(),
                 self.create_subtract_button(),
                 self.create_multiply_button(),
                 self.create_delete_button(),
                 self.create_divide_button(),
-                self.choosing_field(),
                 self.calculation_field(),
-                self.hoch_field(),
-                self.wurzel()]
+                self.create_hoch_field(),
+                self.create_wurzel(),
+                self.create_division_without(),
+                self.create_rest()]
 
     def from_top_left(self, x, count) -> int:
         return x // self.section_count * self.margin * count

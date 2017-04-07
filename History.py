@@ -60,6 +60,14 @@ class History:
             operator = "*"
         if self.confirmed_buttons(button_generator.generate_all_buttons()[4]):
             operator = "/"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[6]):
+            operator = "**"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[7]):
+            operator = "v"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[8]):
+            operator = "//"
+        if self.confirmed_buttons(button_generator.generate_all_buttons()[9]):
+            operator = "%"
         return operator
 
     def confirmed_buttons(self, button: Button):
