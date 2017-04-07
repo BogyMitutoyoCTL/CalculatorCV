@@ -86,6 +86,7 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD))
             # window.wait_key()
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
+            pic = field_picture.copy()
             for hand in hands:
                 print(hand.center)
                 hand.get_center()
@@ -95,8 +96,8 @@ class Main:
                 # window.wait_key()
                 self.history.add_information(hand.center, hand.count_fingers, None)
                 text = str(hand.count_fingers)
-                pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD),
-                                                hand.center, text)
+                center_text_picture = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD)
+                pic = self.tools.text_in_center_hand(center_text_picture, hand.center, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.ORIGINAL_WITH_FELD)
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)

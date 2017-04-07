@@ -6,28 +6,28 @@ from ButtonGenerator import ButtonGenerator
 
 class History:
     def __init__(self):
-        self.Handlist = []
+        self.handlist = []
 
     def add_information(self, center_of_hand, number_of_fingers, operator):
         time = datetime.datetime.now()
         history_data = HistoryData(center_of_hand, time, number_of_fingers, operator)
-        self.Handlist.insert(0, history_data)
+        self.handlist.insert(0, history_data)
 
     def get_center_of_hand(self, index):
-        return self.Handlist[index].center_of_hand
+        return self.handlist[index].center_of_hand
 
     def get_time(self, index):
-        return self.Handlist[index].time
+        return self.handlist[index].time
 
     def get_number_of_fingers(self, index):
-        return self.Handlist[index].number_of_fingers
+        return self.handlist[index].number_of_fingers
 
     def get_operator(self, index):
-        return self.Handlist[index].operator
+        return self.handlist[index].operator
 
     def confirmed_finger_number(self):
         number = None
-        for x in range(0, len(self.Handlist)):
+        for x in range(0, len(self.handlist)):
             if self.confirm_finger(x) is True:
                 number = self.get_number_of_fingers(x)
         return number
@@ -36,7 +36,7 @@ class History:
         time_now = self.get_time(x)
         time_old = time_now
         i = x + 1
-        while i < len(self.Handlist) and self.get_number_of_fingers(i) == self.get_number_of_fingers(x):
+        while i < len(self.handlist) and self.get_number_of_fingers(i) == self.get_number_of_fingers(x):
             time_old = self.get_time(i)
             i += 1
         time_difference = time_now - time_old
@@ -58,11 +58,14 @@ class History:
         time_now = self.get_time(0)
         time_old = time_now
         i = 0
-        while i < len(self.Handlist) and button.contains_point(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+        while i < len(self.handlist) and button.contains_point(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
             time_now = self.get_time(i)
             i += 1
         time_difference = time_now - time_old
         return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
+
+    def reset(self):
+        self.handlist = []
 
 test = History()
 test.add_information((61, 5), 6, None)
@@ -73,7 +76,7 @@ test.add_information((54, 6), 8, "+")
 test.add_information((61, 5), 5, None)
 test.add_information((61, 5), 8, None)
 
-print(test.Handlist)
+print(test.handlist)
 print(test.confirmed_finger_number())
 print(test.get_center_of_hand(0))
 if __name__ == "__main__":
