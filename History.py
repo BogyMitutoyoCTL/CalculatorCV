@@ -51,7 +51,7 @@ class History:
             operator = "-"
         if self.confirm_button(button_generator.generate_all_buttons()[2]) is True:
             operator = "*"
-        if self. confirm_button(button_generator.generate_all_buttons()[4]) is True:
+        if self.confirm_button(button_generator.generate_all_buttons()[4]) is True:
             operator = "/"
         return operator
 
@@ -66,7 +66,7 @@ class History:
         return time_difference >= datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
 
     def reset(self):
-        self.handlist = []
+        self.hand_list = []
 
 test = History()
 test.add_information((61, 5), 6, None)

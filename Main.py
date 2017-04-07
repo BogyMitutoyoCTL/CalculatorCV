@@ -26,6 +26,11 @@ class Main:
         self.picture_to_show = None
         self.keyboard_input = None
         self.history = None
+        self.stage = None
+        self.number1 = None
+        self.number2 = None
+        self.operator = None
+        self.buttons = None
 
     def start(self, getter):
         self.keyboard_input = getter
@@ -39,6 +44,8 @@ class Main:
         self.calculator = Calculator.Calculator()
         self.gui = GUI.GUI(self.calculator, self.picture_storage, self.settings)
         self.history = History()
+        self.stage = 0
+        self.buttons = ButtonGenerator(self.picture_storage)
         self._run()
 
     def _run(self):
@@ -50,9 +57,9 @@ class Main:
             camera_picture = self.tools.flip(self.camera.get_picture())
             self.picture_storage.add_picture(camera_picture.copy(), self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR))
+            self.buttons.add_size()
 
-            TestFenster = ButtonGenerator(self.picture_storage)
-            fields = TestFenster.generate_all_buttons()
+            fields = self.buttons.generate_all_buttons()
             field_picture = camera_picture
             for field in fields:
                 field_picture = field.draw_field(field_picture)
@@ -81,23 +88,53 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
             # window.wait_key()
 
-            self.gui.paint_term(3, "+", 5)
+            # self.gui.paint_term(3, "+", 5)
 
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             # window.wait_key()
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
+            countfingers = 0
             for hand in hands:
-                print(hand.center)
                 hand.get_center()
-                print(hand.center)
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
-                self.history.add_information(hand.center, hand.count_fingers, None)
+                if self.stage == 1:
+                    self.history.add_information(hand.center, None, None)
+
                 text = str(hand.count_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
+                countfingers += hand.count_fingers
+
+            if self.stage == 0:
+                self.history.add_information(None, countfingers, None)
+                self.number1 = countfingers
+                self.gui.paint_term(self.number1)
+                if self.history.confirmed_finger_number() is not None:
+                    self.stage = 1
+                    self.history.reset()
+                    jump = True
+                    print(jump)
+
+            if self.stage == 1 and jump is False:
+                self.gui.paint_term(self.number1)
+                confirmed_operator = self.history.confirmed_operator(self.buttons)
+                if confirmed_operator is not None:
+                    self.operator = confirmed_operator
+                    self.gui.paint_term(self.number1, self.operator)
+                    self.stage = 2
+                    self.history.reset()
+            jump = False
+
+            if self.stage == 2:
+                self.history.add_information(None, countfingers, None)
+                self.number2 = countfingers
+                self.gui.paint_term(self.number1, self.operator, self.number2)
+                if self.history.confirmed_finger_number() is not None:
+                    self.stage = 3
+                    self.history.reset()
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)

@@ -5,14 +5,19 @@ from typing import *
 
 class ButtonGenerator:
     def __init__(self, picture_storage: PictureStorage):
-        picture = picture_storage.get_picture(0)
-        self.width = len(picture[0])
-        self.height = len(picture)
+        self.picture_storage = picture_storage
+        self.width = None
+        self.height = None
         self.section_count = 15
         self.default_button_size = 3
         self.margin = 1
         self.text_scale = 3
         self.text_scale_del = 1
+
+    def add_size(self):
+        picture = self.picture_storage.get_picture(0)
+        self.width = len(picture[0])
+        self.height = len(picture)
 
     def create_add_button(self) -> Button:
         top_x = self.from_left(1)
@@ -79,7 +84,7 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
-    def generate_all_buttons(self) -> List[Button]:
+    def generate_all_buttons(self) -> [Button]:
         return [self.create_add_button(),
                 self.create_subtract_button(),
                 self.create_multiply_button(),
