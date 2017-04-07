@@ -99,7 +99,7 @@ class Main:
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
-                self.gui.paint_term(self.history.confirmed_finger_number(), None, None)
+                self.gui.paint_term(self.history.confirmed_finger_number(), None, None, None)
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
