@@ -121,6 +121,7 @@ class Main:
             if self.stage == 1 and jump is False:
                 self.gui.paint_term(self.number1)
                 confirmed_operator = self.history.confirmed_operator(self.buttons)
+                print(confirmed_operator)
                 if confirmed_operator is not None:
                     self.operator = confirmed_operator
                     self.gui.paint_term(self.number1, self.operator)
