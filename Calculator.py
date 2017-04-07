@@ -1,4 +1,4 @@
-class Calculator():
+class Calculator:
     def calculate(self, value1, value2, operator):
         if operator == "+":
             return value1 + value2

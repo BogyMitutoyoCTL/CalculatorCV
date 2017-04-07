@@ -72,5 +72,3 @@ class Hand:
             center = (0, 0)
 
         self.center_of_hand = center
-
-

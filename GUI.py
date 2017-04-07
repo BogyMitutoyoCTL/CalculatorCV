@@ -48,8 +48,8 @@ class GUI:
         text_x = text_size[0][0]
         text_y = text_size[0][1]
 
-        x = x - text_x / 2
-        y = y + text_y / 2
+        x -= text_x / 2
+        y += text_y / 2
 
         image_with_text = cv2.putText(image, string, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         self.picture_storage.add_picture(image_with_text, self.picture_storage.GUI_BGR)
