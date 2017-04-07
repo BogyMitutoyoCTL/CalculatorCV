@@ -70,7 +70,7 @@ class History:
         
     def confirm_button_from_point_in_past(self, button: Button, x) -> bool:
         time_now = self.get_time(x)
-        time_old = time_now - datetime.timedelta(0, 3, 0, 0, 0, 0, 0)
+        time_old = time_now - datetime.timedelta(0, 2, 0, 0, 0, 0, 0)
         i = x + 1
         in_button_count = 0
         out_of_button_count = 0
