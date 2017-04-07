@@ -92,7 +92,7 @@ class Main:
 
             #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             #self.window.wait_key(0)
-            hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
+            hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px)
             countfingers = 0
             for hand in hands:
                 hand.get_center()

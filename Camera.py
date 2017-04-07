@@ -1,4 +1,3 @@
-import time
 import platform
 import time
 import cv2

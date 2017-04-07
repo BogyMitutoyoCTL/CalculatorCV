@@ -1,6 +1,5 @@
 from PictureStorage import PictureStorage
 from Button import Button
-from typing import *
 
 
 class ButtonGenerator:
