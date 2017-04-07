@@ -10,10 +10,10 @@ class PictureStorage:
         self.GLOVES_WITH_ORIGINAL_BGR = 4
         self.CONTOUR_OF_GLOVES_BGR = 5
         self.HANDS_BW = 6
-        self.ORIGINAL_WITH_FELD = 7
+        self.GUI_BGR = 7
 
-    def add_picture(self, bild, index):
-        self.pictures[index] = bild
+    def add_picture(self, picture, index: int) -> None:
+        self.pictures[index] = picture
 
-    def get_picture(self, index):
+    def get_picture(self, index: int):
         return self.pictures[index]

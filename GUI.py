@@ -13,7 +13,7 @@ class GUI:
         self.default_button_hight = 2.5
 
     def paint_term(self, number1, operator=None, number2=None):
-        image = self.picture_storage.get_picture(self.picture_storage.ORIGINAL_WITH_FELD).copy()
+        image = self.picture_storage.get_picture(self.picture_storage.GUI_BGR).copy()
         hight = len(image)
         width = len(image[0])
 
@@ -31,7 +31,7 @@ class GUI:
             y = y + text_y / 2
 
             image_with_text = cv2.putText(image, string, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-            self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
+            self.picture_storage.add_picture(image_with_text, self.picture_storage.GUI_BGR)
 
         if number2 is None and operator is not None:
 
@@ -47,7 +47,7 @@ class GUI:
             y = y + text_y / 2
 
             image_with_text = cv2.putText(image, string, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),2)
-            self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
+            self.picture_storage.add_picture(image_with_text, self.picture_storage.GUI_BGR)
 
         if number2 is not None and operator is not None:
             result = self.calculator.calculate(number1, number2, operator)
@@ -66,4 +66,4 @@ class GUI:
 
             image_with_text = cv2.putText(image, string, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),
                                           2)
-            self.picture_storage.add_picture(image_with_text, self.picture_storage.ORIGINAL_WITH_FELD)
+            self.picture_storage.add_picture(image_with_text, self.picture_storage.GUI_BGR)
