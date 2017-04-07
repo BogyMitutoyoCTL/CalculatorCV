@@ -136,12 +136,11 @@ class Main:
                         self.main_window.wait_key(1000)
                 elif self.stage == 3:
                     if self.delete_history.confirmed_delete(self.buttons):
-                        self.stage = 0
-                        self.number1 = None
+                        self.stage = 2
                         self.number2 = None
-                        self.operator = None
                         self.history.reset()
                         self.delete_history.reset()
+                        self.main_window.wait_key(1000)
 
             term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2)
             self.gui.paint_term(term)
