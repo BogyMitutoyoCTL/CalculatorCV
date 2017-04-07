@@ -81,9 +81,9 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
             # window.wait_key()
 
-            self.gui.paint_term(3, "+", 5)
+            #self.gui.paint_term(3, "+", 5)
 
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
+            #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             #self.window.wait_key(0)
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
             pic = field_picture
