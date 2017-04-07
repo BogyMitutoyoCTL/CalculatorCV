@@ -1,17 +1,23 @@
 class Calculator:
-    def calculate(self, value1, value2, operator):
+    def calculate(self, value1: int, value2: int, operator: str) -> str:
         if operator == "+":
-            return value1 + value2
+            return str(value1 + value2)
         elif operator == "-":
-            return value1 - value2
+            return str(value1 - value2)
         elif operator == "*":
-            return value1 * value2
+            return str(value1 * value2)
         elif operator == "/":
-            return value1 / value2
+            if value2 > 0:
+                result = value1 / value2 * 100
+                result = int(result)
+                result = result / 100
+                return str(result)
+            else:
+                return "Error"
         else:
             raise RuntimeError("Wrong calculator operator")
 
-    def get_term_from_numbers(self, number1, operator, number2, delete: bool):
+    def get_term_from_numbers(self, number1, operator, number2) -> str:
 
         if number1 is None:
             string = ""
@@ -32,19 +38,8 @@ class Calculator:
 
                 else:
                     result = self.calculate(number1, number2, operator)
-                    result = str(result)
                     string += str(number2)
                     string += " = "
                     string += result
 
         return string
-
-
-calculator = Calculator()
-assert 8 == calculator.calculate(3, 5, "+")
-assert -2 == calculator.calculate(3, 5, "-")
-assert 15 == calculator.calculate(3, 5, "*")
-assert 0.6 == calculator.calculate(3, 5, "/")
-
-if __name__ == "__main__":
-    print("Please run Main.")

@@ -68,39 +68,29 @@ class Main:
                 self.picture_storage.add_picture(field_picture, self.picture_storage.GUI_BGR)
                 self.window.show_picture(field_picture)
 
-            # window.wait_key()
-
             camera_converted_to_hsv = self.tools.convert_to_hsv(camera_picture)
             self.picture_storage.add_picture(camera_converted_to_hsv, self.picture_storage.CAMERA_CONVERTED_HSV)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.CAMERA_CONVERTED_HSV))
-            # window.wait_key()
 
             camera_glove_bw = self.tools.glove_filter(camera_converted_to_hsv)
             self.picture_storage.add_picture(camera_glove_bw, self.picture_storage.GLOVES_BW)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_BW))
-            # window.wait_key()
 
             camera_blurred_bw = self.tools.blur(10, camera_glove_bw)
             self.picture_storage.add_picture(camera_blurred_bw, self.picture_storage.GLOVES_BLURRED_BW)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_BLURRED_BW))
-            # window.wait_key()
 
             camera_glove_bgr = self.tools.color_glove(camera_picture, camera_blurred_bw)
             self.picture_storage.add_picture(camera_glove_bgr, self.picture_storage.GLOVES_WITH_ORIGINAL_BGR)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
-            # window.wait_key()
 
-            # self.gui.paint_term(3, "+", 5)
-
-            #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
-            #self.window.wait_key(0)
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px)
             countfingers = 0
             for hand in hands:
                 hand.init_center()
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
-                # window.wait_key()
+
                 if self.stage == 1:
                     self.history.add_information(hand.center_of_hand, None)
                 self.delete_history.add_information(hand.center_of_hand, None)
@@ -110,49 +100,50 @@ class Main:
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
                 countfingers += hand.number_of_fingers
 
-            if self.stage == 0:
-                self.history.add_information(None, countfingers)
-                if self.history.confirmed_finger_number() is not None:
-                    self.number1 = countfingers
-                    self.stage = 1
-                    self.history.reset()
-                    self.delete_history.reset()
-            elif self.stage == 1:
-                confirmed_operator = self.history.confirmed_operator(self.buttons)
-                if self.delete_history.confirmed_delete(self.buttons):
-                    self.stage = 0
-                    self.number1 = None
-                    self.history.reset()
-                    self.delete_history.reset()
-                    self.main_window.wait_key(1000)
-                if confirmed_operator is not None:
-                    self.operator = confirmed_operator
-                    self.stage = 2
-                    self.history.reset()
-                    self.delete_history.reset()
-            elif self.stage == 2:
-                self.history.add_information(None, countfingers)
-                if self.history.confirmed_finger_number() is not None:
-                    self.number2 = countfingers
-                    self.stage = 3
-                    self.history.reset()
-                    self.delete_history.reset()
-                if self.delete_history.confirmed_delete(self.buttons):
-                    self.stage = 1
-                    self.operator = None
-                    self.history.reset()
-                    self.delete_history.reset()
-                    self.main_window.wait_key(1000)
-            elif self.stage == 3:
-                if self.delete_history.confirmed_delete(self.buttons):
-                    self.stage = 0
-                    self.number1 = None
-                    self.number2 = None
-                    self.operator = None
-                    self.history.reset()
-                    self.delete_history.reset()
+            if len(hands) > 0:
+                if self.stage == 0:
+                    self.history.add_information(None, countfingers)
+                    if self.history.confirmed_finger_number() is not None:
+                        self.number1 = countfingers
+                        self.stage = 1
+                        self.history.reset()
+                        self.delete_history.reset()
+                elif self.stage == 1:
+                    confirmed_operator = self.history.confirmed_operator(self.buttons)
+                    if self.delete_history.confirmed_delete(self.buttons):
+                        self.stage = 0
+                        self.number1 = None
+                        self.history.reset()
+                        self.delete_history.reset()
+                        self.main_window.wait_key(1000)
+                    if confirmed_operator is not None:
+                        self.operator = confirmed_operator
+                        self.stage = 2
+                        self.history.reset()
+                        self.delete_history.reset()
+                elif self.stage == 2:
+                    self.history.add_information(None, countfingers)
+                    if self.history.confirmed_finger_number() is not None:
+                        self.number2 = countfingers
+                        self.stage = 3
+                        self.history.reset()
+                        self.delete_history.reset()
+                    if self.delete_history.confirmed_delete(self.buttons):
+                        self.stage = 1
+                        self.operator = None
+                        self.history.reset()
+                        self.delete_history.reset()
+                        self.main_window.wait_key(1000)
+                elif self.stage == 3:
+                    if self.delete_history.confirmed_delete(self.buttons):
+                        self.stage = 0
+                        self.number1 = None
+                        self.number2 = None
+                        self.operator = None
+                        self.history.reset()
+                        self.delete_history.reset()
 
-            term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2, False)
+            term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2)
             self.gui.paint_term(term)
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
@@ -160,9 +151,7 @@ class Main:
             hands_picture_bgr = self.tools.draw_hands(hands, self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.GUI_BGR)
             self.window.show_picture(hands_picture_bw)
-            # window.wait_key()
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
-            # window.wait_key()
 
             self.window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
             self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
