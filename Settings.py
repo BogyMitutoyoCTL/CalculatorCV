@@ -6,7 +6,7 @@ class Settings:
         self.upper_s = 255
         self.lower_v = 32
         self.upper_v = 190
-        self.minimum_recognition_size_px = 10
+        self.minimum_recognition_size_px = None
 
     def change_lower_h(self, hue: int) -> None:
         self.lower_h = hue
