@@ -31,6 +31,7 @@ class Main:
         self.number2 = None
         self.operator = None
         self.buttons = None
+        self.delete_history = None
 
     def start(self, getter):
         self.keyboard_input = getter
@@ -46,6 +47,7 @@ class Main:
         self.history = History()
         self.stage = 0
         self.buttons = ButtonGenerator(self.picture_storage)
+        self.delete_history = History()
         self._run()
 
     def _run(self):
@@ -101,6 +103,7 @@ class Main:
                 # window.wait_key()
                 if self.stage == 1:
                     self.history.add_information(hand.center_of_hand, None)
+                self.delete_history.add_information(hand.center_of_hand, None)
                 text = str(hand.number_of_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center_of_hand, text)
@@ -109,27 +112,45 @@ class Main:
 
             if self.stage == 0:
                 self.history.add_information(None, countfingers)
-                self.number1 = countfingers
                 if self.history.confirmed_finger_number() is not None:
+                    self.number1 = countfingers
                     self.stage = 1
                     self.history.reset()
+                    self.delete_history.reset()
             elif self.stage == 1:
                 confirmed_operator = self.history.confirmed_operator(self.buttons)
-                print(confirmed_operator)
+                if self.delete_history.confirmed_delete(self.buttons):
+                    self.stage = 0
+                    self.number1 = None
+                    self.history.reset()
+                    self.delete_history.reset()
+                    self.main_window.wait_key(1000)
                 if confirmed_operator is not None:
                     self.operator = confirmed_operator
                     self.stage = 2
                     self.history.reset()
+                    self.delete_history.reset()
             elif self.stage == 2:
                 self.history.add_information(None, countfingers)
-                self.number2 = countfingers
                 if self.history.confirmed_finger_number() is not None:
+                    self.number2 = countfingers
+                    self.stage = 3
+                    self.history.reset()
+                    self.delete_history.reset()
+                if self.delete_history.confirmed_delete(self.buttons):
+                    self.stage = 1
+                    self.operator = None
+                    self.history.reset()
+                    self.delete_history.reset()
                     self.main_window.wait_key(1000)
+            elif self.stage == 3:
+                if self.delete_history.confirmed_delete(self.buttons):
                     self.stage = 0
                     self.number1 = None
                     self.number2 = None
                     self.operator = None
                     self.history.reset()
+                    self.delete_history.reset()
 
             term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2, False)
             self.gui.paint_term(term)

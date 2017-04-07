@@ -55,7 +55,7 @@ class Hand:
                 self.big_radius = int(radius1)
             else:
                 self.big_radius = 0
-            self.small_radius = int(0.68 * self.big_radius)
+            self.small_radius = int(0.7 * self.big_radius)
 
     def get_big_radius(self):
         return self.big_radius
