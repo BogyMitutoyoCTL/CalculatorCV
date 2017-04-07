@@ -3,6 +3,7 @@ from PictureStorage import PictureStorage
 from Settings import Settings
 from Hand import Hand
 from typing import List
+from typing import Tuple
 
 white = (255, 255, 255)
 
@@ -43,7 +44,7 @@ class ImageProcessing:
 
         return color_glove_image
 
-    def get_hands(self, start_picture, minimal_size) -> List[Hand]:
+    def get_hands(self, start_picture, minimal_size: int) -> List[Hand]:
         hands = []
         _, contours, _ = cv2.findContours(start_picture, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if contours is not None:
@@ -63,7 +64,7 @@ class ImageProcessing:
 
         return picture_with_hands
 
-    def get_indexes_of_contours_bigger_than_minimal(self, contours, minimal_size_in_pixel):
+    def get_indexes_of_contours_bigger_than_minimal(self, contours, minimal_size_in_pixel: int) -> Tuple[int, int]:
         index = []
         areas = []
         for i in range(len(contours)):
