@@ -8,7 +8,8 @@ class Calculator:
             return str(value1 * value2)
         elif operator == "/":
             if value2 > 0:
-                result = value1 / value2 * 100
+                result = value1 / value2
+                result = result * 100
                 result = int(result)
                 result = result / 100
                 return str(result)
