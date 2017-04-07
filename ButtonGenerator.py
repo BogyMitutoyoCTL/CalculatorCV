@@ -83,6 +83,26 @@ class ButtonGenerator:
 
         return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
 
+    def hoch_field(self):
+        top_x = self.from_right()
+        top_y = self.from_top(5)
+        bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
+        bottom_y = self.calculate_bottom(top_y, self.height, 2)
+
+        text = "hoch"
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
+    def wurzel(self):
+        top_x = self.from_right()
+        top_y = self.from_top(8)
+        bottom_x = self.calculate_bottom(top_x, self.width, self.default_button_size)
+        bottom_y = self.calculate_bottom(top_y, self.height, 2)
+
+        text = "wurzel"
+
+        return Button(top_x, top_y, bottom_x, bottom_y, text, self.text_scale_del)
+
     def generate_all_buttons(self) -> [Button]:
         return [self.create_add_button(),
                 self.create_subtract_button(),
@@ -90,7 +110,9 @@ class ButtonGenerator:
                 self.create_delete_button(),
                 self.create_divide_button(),
                 self.choosing_field(),
-                self.calculation_field()]
+                self.calculation_field(),
+                self.hoch_field(),
+                self.wurzel()]
 
     def from_top_left(self, x, count) -> int:
         return x // self.section_count * self.margin * count
