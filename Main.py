@@ -122,6 +122,7 @@ class Main:
             elif self.stage == 2:
                 self.number2 = countfingers
                 if self.history.confirmed_finger_number() is not None:
+                    self.main_window.wait_key(1000)
                     self.stage = 0
                     self.number1 = None
                     self.number2 = None
