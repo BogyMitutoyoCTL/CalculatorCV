@@ -102,7 +102,7 @@ class Main:
                 if self.stage == 1:
                     self.history.add_information(hand.center, None, None)
 
-                text = str(hand.count_fingers)
+                text = str(hand.number_of_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
