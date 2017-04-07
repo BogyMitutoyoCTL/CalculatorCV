@@ -14,8 +14,13 @@ class Calculator:
                 return str(result)
             else:
                 return "Error"
+        elif operator == "**":
+            return str(value1 ** value2)
+        elif operator == "v":
+            return str(value2 ** (1/value1))
         else:
             raise RuntimeError("Wrong calculator operator")
+
 
     def get_term_from_numbers(self, number1, operator, number2) -> str:
 
