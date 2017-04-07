@@ -12,7 +12,7 @@ class GUI:
         self.section_count = 15
         self.default_button_hight = 2.5
 
-    def paint_term(self, number1, operator, number2, delete):
+    def paint_term(self, number1=None, operator=None, number2=None, delete=None):
         image = self.picture_storage.get_picture(self.picture_storage.GUI_BGR).copy()
         hight = len(image)
         width = len(image[0])

@@ -23,12 +23,18 @@ class Main:
         self.main_window = None
         self.calculator = None
         self.gui = None
-        self.key = None
-        self.getter = None
+        self.picture_to_show = None
+        self.keyboard_input = None
         self.history = None
+        self.stage = None
+        self.number1 = None
+        self.number2 = None
+        self.operator = None
+        self.buttons = None
 
     def start(self, getter):
-        self.getter = getter
+        self.keyboard_input = getter
+        self.picture_to_show = self.keyboard_input.get()
         self.picture_storage = PictureStorage()
         self.settings = Settings.Settings()
         self.camera = Camera()
@@ -37,22 +43,23 @@ class Main:
         self.main_window = Window(self.settings, "Taschenrechner")
         self.calculator = Calculator.Calculator()
         self.gui = GUI.GUI(self.calculator, self.picture_storage, self.settings)
-        self.key = self.getter.get()
         self.history = History()
+        self.stage = 0
+        self.buttons = ButtonGenerator(self.picture_storage)
         self._run()
 
     def _run(self):
         self.window.create_trackbars()
-        while self.key != -1:
-            if not self.getter.empty():
-                self.key = self.getter.get()
+        while self.picture_to_show != -1:
+            if not self.keyboard_input.empty():
+                self.picture_to_show = self.keyboard_input.get()
 
             camera_picture = self.tools.flip(self.camera.get_picture())
             self.picture_storage.add_picture(camera_picture.copy(), self.picture_storage.ORIGINAL_FROM_CAMERA_BGR)
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.ORIGINAL_FROM_CAMERA_BGR))
+            self.buttons.add_size()
 
-            TestFenster = ButtonGenerator(self.picture_storage)
-            fields = TestFenster.generate_all_buttons()
+            fields = self.buttons.generate_all_buttons()
             field_picture = camera_picture
             for field in fields:
                 field_picture = field.draw_field(field_picture)
@@ -81,21 +88,21 @@ class Main:
             self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GLOVES_WITH_ORIGINAL_BGR))
             # window.wait_key()
 
-            #self.gui.paint_term(3, "+", 5)
+            # self.gui.paint_term(3, "+", 5)
 
             #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             #self.window.wait_key(0)
             hands = self.tools.get_hands(camera_blurred_bw, self.settings.minimum_recognition_size_px, 2)
-            pic = field_picture
+            countfingers = 0
             for hand in hands:
-                # print(hand.center)
                 hand.get_center()
-                # print(hand.center)
                 hand_picture = hand.fingers(camera_blurred_bw)
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
-                self.history.add_information(hand.center_of_hand, hand.number_of_fingers, None)
-                text = str(hand.number_of_fingers)
+                if self.stage == 1:
+                    self.history.add_information(hand.center, None, None)
+
+                text = str(hand.count_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
@@ -112,7 +119,7 @@ class Main:
 
 
 
-            self.window.show_picture(self.picture_storage.get_picture(self.key))
+            self.window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
             self.main_window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             self.window.wait_key(10)
 
