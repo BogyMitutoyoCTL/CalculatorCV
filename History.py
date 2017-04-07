@@ -28,12 +28,12 @@ class History:
 
     def confirmed_finger_number(self):
         number = None
-        for x in range(0, len(self.hand_list)):
-            if self.confirm_finger(x) is True:
-                number = self.get_number_of_fingers(x)
+        for point_in_history in range(len(self.hand_list)):
+            if self.confirm_fingers_from_point_in_past(point_in_history) is True:
+                number = self.get_number_of_fingers(point_in_history)
         return number
 
-    def confirm_finger(self, x) -> bool:
+    def confirm_fingers_from_point_in_past(self, x) -> bool:
         time_now = self.get_time(x)
         time_old = time_now
         i = x + 1
@@ -51,21 +51,22 @@ class History:
 
     def confirmed_operator(self, button_generator: ButtonGenerator):
         operator = None
-        if self.confirm_button(button_generator.generate_all_buttons()[0]) is True:
-            operator = "+"
-        if self.confirm_button(button_generator.generate_all_buttons()[1]) is True:
-            operator = "-"
-        if self.confirm_button(button_generator.generate_all_buttons()[2]) is True:
-            operator = "*"
-        if self.confirm_button(button_generator.generate_all_buttons()[4]) is True:
-            operator = "/"
+        for point_in_history in range(len(self.hand_list)):
+            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[0], point_in_history) is True:
+                operator = "+"
+            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[1], point_in_history) is True:
+                operator = "-"
+            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[2], point_in_history) is True:
+                operator = "*"
+            if self.confirm_button_from_point_in_past(button_generator.generate_all_buttons()[4], point_in_history) is True:
+                operator = "/"
         return operator
 
-    def confirm_button(self, button: Button) -> bool:
-        time_now = self.get_time(0)
+    def confirm_button_from_point_in_past(self, button: Button, x) -> bool:
+        time_now = self.get_time(x)
         time_old = time_now
-        i = 0
-        while i < len(self.hand_list) and button.contains_point(self.get_center_of_hand(i)[0], self.get_center_of_hand(i)[1]):
+        i = x + 1
+        while i < len(self.hand_list) and button.contains_point(self.get_center_of_hand(i)) is True and button.contains_point(self.get_center_of_hand(x))is True:
             time_now = self.get_time(i)
             i += 1
         time_difference = time_now - time_old

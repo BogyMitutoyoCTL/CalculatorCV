@@ -110,8 +110,9 @@ class Main:
             if self.stage == 0:
                 self.number1 = countfingers
                 if self.history.confirmed_finger_number() is not None:
-                    self.stage = 1
+                    self.stage = 2
                     self.history.reset()
+                    self.operator = '+'
             elif self.stage == 1:
                 confirmed_operator = self.history.confirmed_operator(self.buttons)
                 if confirmed_operator is not None:
@@ -121,7 +122,11 @@ class Main:
             elif self.stage == 2:
                 self.number2 = countfingers
                 if self.history.confirmed_finger_number() is not None:
-                    self.stage = 3
+                    self.main_window.wait_key(1000)
+                    self.stage = 0
+                    self.number1 = None
+                    self.number2 = None
+                    self.operator = None
                     self.history.reset()
 
             term = self.calculator.get_term_from_numbers(self.number1, self.operator, self.number2, False)

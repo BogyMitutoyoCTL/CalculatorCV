@@ -1,4 +1,5 @@
 import cv2
+from typing import Tuple
 
 
 class Button:
@@ -45,5 +46,5 @@ class Button:
     def get_bottom_y(self) -> int:
         return self.bottom_right[1]
 
-    def contains_point(self, x, y) -> bool:
-        return self.top_x <= x <= self.bottom_x and self.top_y <= y <= self.bottom_y
+    def contains_point(self, point: Tuple[int, int]) -> bool:
+        return self.top_x <= point[0] <= self.bottom_x and self.top_y <= point[1] <= self.bottom_y
