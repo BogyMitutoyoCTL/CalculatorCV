@@ -95,6 +95,5 @@ class ImageProcessing:
         y = center[1]
         y += hight // 2
 
-        picture = cv2.putText(picture, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+        return cv2.putText(picture, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 3)
 
-        return picture
