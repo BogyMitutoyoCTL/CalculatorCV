@@ -100,21 +100,22 @@ class Main:
                 self.window.show_picture(hand_picture)
                 # window.wait_key()
                 if self.stage == 1:
-                    self.history.add_information(hand.center, None, None)
+                    self.history.add_information(hand.center_of_hand, None, None)
 
                 text = str(hand.number_of_fingers)
                 pic = self.tools.text_in_center_hand(self.picture_storage.get_picture(self.picture_storage.GUI_BGR),
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
-                countfingers += hand.count_fingers
+                countfingers += hand.number_of_fingers
 
             if self.stage == 0:
                 self.history.add_information(None, countfingers, None)
                 self.number1 = countfingers
                 self.gui.paint_term(self.number1)
                 if self.history.confirmed_finger_number() is not None:
-                    self.stage = 1
+                    self.stage = 2
                     self.history.reset()
+                    self.operator = '+'
                     jump = True
                     print(jump)
 
@@ -134,7 +135,7 @@ class Main:
                 self.number2 = countfingers
                 self.gui.paint_term(self.number1, self.operator, self.number2)
                 if self.history.confirmed_finger_number() is not None:
-                    self.stage = 3
+                    self.stage = 0
                     self.history.reset()
 
             hands_picture_bw = self.tools.draw_hands(hands, camera_blurred_bw)
