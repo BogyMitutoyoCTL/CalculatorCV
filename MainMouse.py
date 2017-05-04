@@ -11,6 +11,7 @@ import cv2
 import multiprocessing
 import KeyListener
 from History import History
+import pyautogui
 
 class Main:
 
@@ -99,43 +100,22 @@ class Main:
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
                 countfingers += hand.number_of_fingers
+                picture_hight = len(hand_picture)
+                picture_width = len(hand_picture[0])
+                display_width, display_hight = pyautogui.size()
+                pyautogui.FAILSAFE = False
+                pyautogui.moveTo(hand.center_of_hand[0] * (display_width/(0.75 * picture_width)) - 100, hand.center_of_hand[1] * (display_hight/(0.75 * picture_hight)) - 100)
 
             if len(hands) > 0:
                 if self.stage == 0:
                     self.history.add_information(None, countfingers)
                     if self.history.confirmed_finger_number() is not None:
                         self.number1 = countfingers
-                        self.stage = 1
-                        self.history.reset()
-                        self.delete_history.reset()
-                elif self.stage == 1:
-                    confirmed_operator = self.history.confirmed_operator(self.buttons)
-                    if self.delete_history.confirmed_delete(self.buttons):
+                        if countfingers == 1:
+                            pyautogui.click()
+                        elif countfingers == 2:
+                            pyautogui.rightClick()
                         self.stage = 0
-                        self.number1 = None
-                        self.history.reset()
-                        self.delete_history.reset()
-                    if confirmed_operator is not None:
-                        self.operator = confirmed_operator
-                        self.stage = 2
-                        self.history.reset()
-                        self.delete_history.reset()
-                elif self.stage == 2:
-                    self.history.add_information(None, countfingers)
-                    if self.history.confirmed_finger_number() is not None:
-                        self.number2 = countfingers
-                        self.stage = 3
-                        self.history.reset()
-                        self.delete_history.reset()
-                    if self.delete_history.confirmed_delete(self.buttons):
-                        self.stage = 1
-                        self.operator = None
-                        self.history.reset()
-                        self.delete_history.reset()
-                elif self.stage == 3:
-                    if self.delete_history.confirmed_delete(self.buttons):
-                        self.stage = 2
-                        self.number2 = None
                         self.history.reset()
                         self.delete_history.reset()
 
@@ -146,12 +126,12 @@ class Main:
             self.picture_storage.add_picture(hands_picture_bw, self.picture_storage.HANDS_BW)
             hands_picture_bgr = self.tools.draw_hands(hands, self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
             self.picture_storage.add_picture(hands_picture_bgr, self.picture_storage.GUI_BGR)
-            self.window.show_picture(hands_picture_bw)
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
+            #self.window.show_picture(hands_picture_bw)
+            #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
 
-            self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
-            self.main_window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
-            self.window.wait_key(10)
+            #self.window.show_picture(self.picture_storage.get_picture(self.picture_storage.GUI_BGR))
+            #self.main_window.show_picture(self.picture_storage.get_picture(self.picture_to_show))
+            #self.window.wait_key(10)
 
 if __name__ == "__main__":
     queue = multiprocessing.Queue()
