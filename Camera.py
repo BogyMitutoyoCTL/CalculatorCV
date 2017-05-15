@@ -49,8 +49,8 @@ class Camera:
         return False
 
 
-DEFAULT_CAMERA = 0
-RESOLUTION = (800, 600)
+DEFAULT_CAMERA = 1
+RESOLUTION = (1280, 720)
 FRAMERATE = 30
 
 
@@ -59,8 +59,8 @@ class WindowsCamera:
         self.camera = cv2.VideoCapture(DEFAULT_CAMERA)
         self.camera.set(cv2.CAP_PROP_FPS, FRAMERATE)
         width, height = RESOLUTION
-        #self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-        #self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+        self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+        self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
         self.camera.set(cv2.CAP_PROP_CONVERT_RGB, False)  # leave in BGR mode
 
     def get_next_frame(self):
