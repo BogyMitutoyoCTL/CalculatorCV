@@ -99,11 +99,13 @@ class Main:
                                                 hand.center_of_hand, text)
                 self.picture_storage.add_picture(pic, self.picture_storage.GUI_BGR)
                 countfingers += hand.number_of_fingers
+                self.tools.fill = False
 
             if len(hands) > 0:
                 if self.stage == 0:
                     self.history.add_information(None, countfingers)
                     if self.history.confirmed_finger_number() is not None:
+                        self.tools.fill = True
                         self.number1 = countfingers
                         self.stage = 1
                         self.history.reset()
@@ -111,11 +113,13 @@ class Main:
                 elif self.stage == 1:
                     confirmed_operator = self.history.confirmed_operator(self.buttons)
                     if self.delete_history.confirmed_delete(self.buttons):
+                        self.tools.fill = True
                         self.stage = 0
                         self.number1 = None
                         self.history.reset()
                         self.delete_history.reset()
                     if confirmed_operator is not None:
+                        self.tools.fill = True
                         self.operator = confirmed_operator
                         self.stage = 2
                         self.history.reset()
@@ -123,17 +127,20 @@ class Main:
                 elif self.stage == 2:
                     self.history.add_information(None, countfingers)
                     if self.history.confirmed_finger_number() is not None:
+                        self.tools.fill = True
                         self.number2 = countfingers
                         self.stage = 3
                         self.history.reset()
                         self.delete_history.reset()
                     if self.delete_history.confirmed_delete(self.buttons):
+                        self.tools.fill = True
                         self.stage = 1
                         self.operator = None
                         self.history.reset()
                         self.delete_history.reset()
                 elif self.stage == 3:
                     if self.delete_history.confirmed_delete(self.buttons):
+                        self.tools.fill = True
                         self.stage = 2
                         self.number2 = None
                         self.history.reset()

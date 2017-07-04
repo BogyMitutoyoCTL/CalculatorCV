@@ -19,6 +19,7 @@ class ImageProcessing:
         self.INCLUSIVE_GRAY = 100
         self.WHITE = 255
         self.ALL_CHANNELS = 1
+        self.fill = False
 
     def convert_to_hsv(self, bgr_image):
         hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)
@@ -59,7 +60,10 @@ class ImageProcessing:
             hand = hands[i]
             picture_with_hands = cv2.drawContours(picture_with_hands, hand.contour, 0, white)
             picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, 5, black, filled)
-            picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, hand.small_radius, black, 2)
+            if self.fill:
+                picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, hand.small_radius, black, -1)
+            else:
+                picture_with_hands = cv2.circle(picture_with_hands, hand.center_of_hand, hand.small_radius, black, 2)
             picture_with_hands = cv2.drawContours(picture_with_hands, hand.finger_contours, -1, (255, 255, 255), filled)
 
         return picture_with_hands
