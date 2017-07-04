@@ -83,7 +83,6 @@ class ImageProcessing:
         index, areas = self.shrink_list_to_count(index, areas)
         return index, areas
 
-    # TODO: shrink_list_to_count(count, index, areas)(if you want to have only a special number of hands)
 
     def shrink_list_to_count(self, index, areas):
         return index, areas
