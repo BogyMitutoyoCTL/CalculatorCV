@@ -7,6 +7,7 @@ class Settings:
         self.lower_v = 32
         self.upper_v = 190
         self.minimum_recognition_size_px = 0
+        self.factor = 0.7
 
     def change_lower_h(self, hue: int) -> None:
         self.lower_h = hue
@@ -25,6 +26,9 @@ class Settings:
 
     def change_upper_v(self, value: int) -> None:
         self.upper_v = value
+
+    def change_factor(self, value: int) -> None:
+        self.factor = value / 1000
 
     def change_recognition_size(self, minimum_size_px: int) -> None:
         self.minimum_recognition_size_px = minimum_size_px

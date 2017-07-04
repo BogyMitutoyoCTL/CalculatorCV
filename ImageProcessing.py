@@ -50,7 +50,7 @@ class ImageProcessing:
         if contours is not None:
             indexes, areas = self.get_indexes_of_contours_bigger_than_minimal(contours, minimal_size)
             for i in range(len(indexes)):
-                hands.append(Hand(None, None, None, None, contours[indexes[i]], areas[i]))
+                hands.append(Hand(None, None, None, None, contours[indexes[i]], areas[i], self.settings.factor))
         return hands
 
     def draw_hands(self, hands: [Hand], picture_to_draw_on):

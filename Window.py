@@ -25,6 +25,7 @@ class Window:
         cv2.createTrackbar("lower_v", self.window_name, 32, 255, self.settings.change_lower_v)
         cv2.createTrackbar("upper_v", self.window_name, 190, 255, self.settings.change_upper_v)
         cv2.createTrackbar("minimum_recognition_size", self.window_name, 10, 100, self.size_changed_permille)
+        cv2.createTrackbar("factor", self.window_name, 700, 1000, self.settings.change_factor)
 
     def size_changed_permille(self, minimum_recognition_size_permille: int) -> None:
         size_in_px = self.image_area_px * minimum_recognition_size_permille / 1000

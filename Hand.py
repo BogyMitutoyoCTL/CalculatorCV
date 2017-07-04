@@ -3,7 +3,7 @@ import numpy
 
 
 class Hand:
-    def __init__(self, number_of_fingers=None, center_of_hand=None, big_radius=None, small_radius=None, contour=None, area=None):
+    def __init__(self, number_of_fingers=None, center_of_hand=None, big_radius=None, small_radius=None, contour=None, area=None, factor=0.7):
         self.number_of_fingers = number_of_fingers
         self.center_of_hand = center_of_hand
         self.big_radius = big_radius
@@ -14,6 +14,7 @@ class Hand:
         self.color_black = (0, 0, 0)
         self.color_white = (255, 255, 255)
         self.thickness = -1
+        self.factor = factor
 
     def fingers(self, picture_blurred_bw):
         self.set_radius()
@@ -58,7 +59,7 @@ class Hand:
                 self.big_radius = int(radius1)
             else:
                 self.big_radius = 0
-            self.small_radius = int(0.7 * self.big_radius)
+            self.small_radius = int(self.factor * self.big_radius)
 
     def get_big_radius(self):
         return self.big_radius
